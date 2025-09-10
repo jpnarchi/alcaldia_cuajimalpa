@@ -9,30 +9,45 @@ export const authProvider: AuthProvider = {
         }
         localStorage.setItem("username", username);
         localStorage.setItem("role", "viewer"); // Set role based on user
+        
+        // Force redirect to admin dashboard
+        setTimeout(() => {
+            window.location.href = "/admin";
+        }, 100);
+        
+        return Promise.resolve();
     },
     // called when the user clicks on the logout button
     async logout() {
         localStorage.removeItem("username");
         localStorage.removeItem("role");
+        
+        // Redirect to home page after logout
+        window.location.href = "/";
     },
     // called when the API returns an error
     async checkError({ status }: { status: number }) {
         if (status === 401 || status === 403) {
             localStorage.removeItem("username");
             localStorage.removeItem("role");
+            
+            // Redirect to login page on authentication error
+            window.location.href = "/admin/login";
             throw new Error("Session expired");
         }
     },
     // called when the user navigates to a new location, to check for authentication
     async checkAuth() {
-        if (!localStorage.getItem("username")) {
+        const username = localStorage.getItem("username");
+        if (!username) {
             throw new Error("Authentication required");
         }
+        return Promise.resolve();
     },
     // called when the user profile is requested
     async getIdentity() {
         const username = localStorage.getItem("username");
-        const role = localStorage.getItem("role") || "admin";
+        const role = localStorage.getItem("role") || "viewer";
         
         if (!username) {
             throw new Error("Not authenticated");

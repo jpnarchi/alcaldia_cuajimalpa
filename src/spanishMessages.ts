@@ -60,6 +60,10 @@ export const spanishMessages = {
           upload_single:
             'Arrastra una imagen para subir, o haz clic para seleccionarla.',
         },
+        password: {
+          toggle_hidden: 'Mostrar/ocultar contraseña',
+          toggle_visible: 'Ocultar contraseña',
+        },
         references: {
           all_missing: 'No se pueden encontrar datos de referencias.',
           many_missing:
