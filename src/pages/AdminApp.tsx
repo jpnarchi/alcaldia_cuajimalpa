@@ -13,6 +13,7 @@ import { TodoList, TodoEdit, TodoCreate, TodoShow } from '../todos';
 import { authProvider } from '../authProvider';
 import { CustomUserList } from '../components/CustomUserList';
 import { DashboardStats } from '../components/DashboardStats';
+import { CustomLoginPage } from '../components/CustomLoginPage';
 
 export const AdminApp = () => (
     <Admin 
@@ -21,7 +22,7 @@ export const AdminApp = () => (
         authProvider={authProvider} 
         i18nProvider={i18nProvider}
         basename="/admin"
-        loginPage={Login}
+        loginPage={CustomLoginPage}
     > 
         <Resource name = 'users' list = {UserList} show = {UserShow} edit = {UserEdit} create = {UserCreate} icon={Users} options={{ label: 'Usuarios' }}/>
         <Resource name = 'posts' list = {PostList} edit = {PostEdit} create = {PostCreate} show = {PostShow} icon={FileText} options={{ label: 'Publicaciones' }}/>
