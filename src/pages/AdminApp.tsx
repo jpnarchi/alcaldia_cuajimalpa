@@ -1,4 +1,4 @@
-import { Admin, Resource } from 'react-admin';
+import { Admin, Resource, Login } from 'react-admin';
 import { Users, FileText, Image, MessageSquare, CheckSquare, Camera } from 'lucide-react';
 
 import { Layout } from "../Layout";
@@ -21,6 +21,7 @@ export const AdminApp = () => (
         authProvider={authProvider} 
         i18nProvider={i18nProvider}
         basename="/admin"
+        loginPage={Login}
     > 
         <Resource name = 'users' list = {UserList} show = {UserShow} edit = {UserEdit} create = {UserCreate} icon={Users} options={{ label: 'Usuarios' }}/>
         <Resource name = 'posts' list = {PostList} edit = {PostEdit} create = {PostCreate} show = {PostShow} icon={FileText} options={{ label: 'Publicaciones' }}/>
