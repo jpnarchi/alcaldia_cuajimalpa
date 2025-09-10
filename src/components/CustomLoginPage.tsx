@@ -92,7 +92,10 @@ const LoginForm = () => {
     <Box
       sx={{
         minHeight: '100vh',
-        backgroundColor: 'white !important',
+        backgroundImage: 'url(/cuajimalpa-login.webp)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -103,6 +106,16 @@ const LoginForm = () => {
         right: 0,
         bottom: 0,
         zIndex: 9999,
+        '&::before': {
+          content: '""',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(255, 255, 255, 0.3)',
+          zIndex: 1,
+        },
       }}
     >
       {/* Logo en esquina superior izquierda */}
@@ -111,7 +124,7 @@ const LoginForm = () => {
           position: 'absolute',
           top: { xs: 10, sm: 20 },
           left: { xs: 20, sm: 60 },
-          zIndex: 10000,
+          zIndex: 10001,
         }}
       >
         <img 
@@ -132,6 +145,8 @@ const LoginForm = () => {
           width: '100%',
           height: '100%',
           padding: { xs: 1, sm: 2 },
+          position: 'relative',
+          zIndex: 2,
         }}
       >
         <StyledCard
@@ -255,10 +270,10 @@ export const CustomLoginPage = () => (
     <style>
       {`
         body, html, #root {
-          background-color: white !important;
+          background-color: transparent !important;
         }
         .MuiCssBaseline-root {
-          background-color: white !important;
+          background-color: transparent !important;
         }
       `}
     </style>
