@@ -1,14 +1,28 @@
 import { AuthProvider } from "react-admin";
 
+// Mock users with different roles
+const mockUsers = {
+    "A01781518": { password: "TC2007B", role: "usuario", name: "Juan Pablo Narchi", turno: "mañana" },
+    "J12345678": { password: "jefe123", role: "jefe_turno", name: "María García", turno: "mañana" },
+    "J87654321": { password: "jefe456", role: "jefe_turno", name: "Carlos López", turno: "tarde" },
+    "A99999999": { password: "admin123", role: "administrador", name: "Ana Rodríguez", turno: null },
+};
+
 export const authProvider: AuthProvider = {
     // called when the user attempts to log in
     async login({ username, password }) {
-        // check for specific username and password
-        if (username !== "A01781518" || password !== "TC2007B") {
+        const user = mockUsers[username as keyof typeof mockUsers];
+        
+        if (!user || user.password !== password) {
             throw new Error("Invalid credentials, please try again");
         }
+        
         localStorage.setItem("username", username);
-        localStorage.setItem("role", "viewer"); // Set role based on user
+        localStorage.setItem("role", user.role);
+        localStorage.setItem("name", user.name);
+        if (user.turno) {
+            localStorage.setItem("turno", user.turno);
+        }
         
         // Force redirect to admin dashboard
         setTimeout(() => {
@@ -21,6 +35,8 @@ export const authProvider: AuthProvider = {
     async logout() {
         localStorage.removeItem("username");
         localStorage.removeItem("role");
+        localStorage.removeItem("name");
+        localStorage.removeItem("turno");
         
         // Redirect to home page after logout
         window.location.href = "/";
@@ -30,6 +46,8 @@ export const authProvider: AuthProvider = {
         if (status === 401 || status === 403) {
             localStorage.removeItem("username");
             localStorage.removeItem("role");
+            localStorage.removeItem("name");
+            localStorage.removeItem("turno");
             
             // Redirect to login page on authentication error
             window.location.href = "/admin/login";
@@ -47,7 +65,9 @@ export const authProvider: AuthProvider = {
     // called when the user profile is requested
     async getIdentity() {
         const username = localStorage.getItem("username");
-        const role = localStorage.getItem("role") || "viewer";
+        const role = localStorage.getItem("role") || "usuario";
+        const name = localStorage.getItem("name") || "Usuario";
+        const turno = localStorage.getItem("turno");
         
         if (!username) {
             throw new Error("Not authenticated");
@@ -55,9 +75,10 @@ export const authProvider: AuthProvider = {
         
         return {
             id: username,
-            fullName: "Juan Pablo",
+            fullName: name,
             username,
             role,
+            turno,
         };
     },
     // called to get user permissions
