@@ -24,7 +24,7 @@ const StyledCard = styled(Card)(({ theme }) => ({
   boxShadow: 'none',
   backgroundColor: 'white',
   color: 'black',
-  border: '1px solid #e0e0e0',
+  border: 'none',
 }));
 
 const StyledTextField = styled(TextField)(({ theme }) => ({
@@ -32,7 +32,7 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
     backgroundColor: 'white',
     borderRadius: 8,
     '& fieldset': {
-      borderColor: '#e0e0e0',
+      borderColor: 'black',
     },
     '&:hover fieldset': {
       borderColor: '#1976d2',
@@ -42,7 +42,7 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
     },
   },
   '& .MuiInputLabel-root': {
-    color: 'rgba(0, 0, 0, 0.6)',
+    color: 'black',
   },
 }));
 
@@ -92,10 +92,7 @@ const LoginForm = () => {
     <Box
       sx={{
         minHeight: '100vh',
-        backgroundImage: 'url(/cuajimalpa-login.webp)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
+        backgroundColor: 'white !important',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -106,25 +103,16 @@ const LoginForm = () => {
         right: 0,
         bottom: 0,
         zIndex: 9999,
-        '&::before': {
-          content: '""',
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          backgroundColor: 'rgba(255, 255, 255, 0.3)',
-          zIndex: 1,
-        },
       }}
     >
-      {/* Logo en esquina superior izquierda */}
+      {/* Logo centrado en la parte superior */}
       <Box
         sx={{
           position: 'absolute',
-          top: { xs: 10, sm: 20 },
-          left: { xs: 20, sm: 60 },
-          zIndex: 10001,
+          top: { xs: 20, sm: 40 },
+          left: '50%',
+          transform: 'translateX(-50%)',
+          zIndex: 10000,
         }}
       >
         <img 
@@ -145,8 +133,6 @@ const LoginForm = () => {
           width: '100%',
           height: '100%',
           padding: { xs: 1, sm: 2 },
-          position: 'relative',
-          zIndex: 2,
         }}
       >
         <StyledCard
@@ -172,7 +158,7 @@ const LoginForm = () => {
               <Typography 
                 variant="body1" 
                 sx={{ 
-                  color: 'rgba(0, 0, 0, 0.6)',
+                  color: 'black',
                   fontSize: { xs: '0.9rem', sm: '1rem' }
                 }}
               >
@@ -254,7 +240,7 @@ const LoginForm = () => {
 
             {/* Footer */}
             <Box textAlign="center" mt={3}>
-              <Typography variant="body2" sx={{ color: 'rgba(0, 0, 0, 0.6)' }}>
+              <Typography variant="body2" sx={{ color: 'black' }}>
                 © 2025 Alcaldía Cuajimalpa. Todos los derechos reservados.
               </Typography>
             </Box>
@@ -270,10 +256,10 @@ export const CustomLoginPage = () => (
     <style>
       {`
         body, html, #root {
-          background-color: transparent !important;
+          background-color: white !important;
         }
         .MuiCssBaseline-root {
-          background-color: transparent !important;
+          background-color: white !important;
         }
       `}
     </style>
