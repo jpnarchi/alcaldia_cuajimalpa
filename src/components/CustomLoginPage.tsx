@@ -92,7 +92,11 @@ const LoginForm = () => {
     <Box
       sx={{
         minHeight: '100vh',
-        backgroundColor: 'white !important',
+        backgroundImage: 'url(/cuajimalpa-login.webp)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundColor: 'white',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -103,15 +107,24 @@ const LoginForm = () => {
         right: 0,
         bottom: 0,
         zIndex: 9999,
+        '&::before': {
+          content: '""',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(255, 255, 255, 0.4)',
+          zIndex: 1,
+        },
       }}
     >
-      {/* Logo centrado en la parte superior */}
+      {/* Logo en esquina superior izquierda */}
       <Box
         sx={{
           position: 'absolute',
-          top: { xs: 20, sm: 40 },
-          left: '50%',
-          transform: 'translateX(-50%)',
+          top: { xs: 20, sm: 30 },
+          left: { xs: 20, sm: 40 },
           zIndex: 10000,
         }}
       >
@@ -119,7 +132,7 @@ const LoginForm = () => {
           src="/logo.png" 
           alt="Logo Alcaldía Cuajimalpa" 
           style={{ 
-            height: '50px', 
+            height: '60px', 
             width: 'auto',
             objectFit: 'contain'
           }}
@@ -133,6 +146,8 @@ const LoginForm = () => {
           width: '100%',
           height: '100%',
           padding: { xs: 1, sm: 2 },
+          position: 'relative',
+          zIndex: 2,
         }}
       >
         <StyledCard
