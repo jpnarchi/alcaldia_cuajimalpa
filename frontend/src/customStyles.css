@@ -1,0 +1,532 @@
+/* Estilos globales personalizados para la plataforma */
+
+/* Importar fuente Inter (opcional, más moderna) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* Reset y estilos base */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scrollbar personalizada */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Sidebar personalizada */
+.RaSidebar-fixed {
+  background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%) !important;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Drawer (sidebar en móvil) */
+.MuiDrawer-paper {
+  background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%) !important;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
+}
+
+.RaMenuItemLink-root {
+  color: #cbd5e1 !important;
+  transition: all 0.2s ease;
+  margin: 4px 8px;
+  border-radius: 8px;
+  padding: 10px 16px !important;
+}
+
+.RaMenuItemLink-root:hover {
+  background-color: rgba(59, 130, 246, 0.1) !important;
+  color: #60a5fa !important;
+}
+
+.RaMenuItemLink-active {
+  background-color: #334155 !important;
+  border-left: 4px solid #3b82f6 !important;
+  color: #ffffff !important;
+  font-weight: 600;
+}
+
+.RaMenuItemLink-icon {
+  color: inherit !important;
+  min-width: 36px !important;
+}
+
+/* AppBar personalizada */
+.RaAppBar-toolbar {
+  padding: 12px 24px !important;
+}
+
+.RaAppBar-title {
+  font-weight: 600 !important;
+  font-size: 1.25rem !important;
+}
+
+/* Botones mejorados */
+.MuiButton-root {
+  transition: all 0.2s ease !important;
+}
+
+.MuiButton-contained:hover {
+  transform: translateY(-2px);
+}
+
+.MuiButton-outlined {
+  border-width: 2px !important;
+}
+
+.MuiButton-outlined:hover {
+  border-width: 2px !important;
+}
+
+/* Cards con hover effect */
+.MuiCard-root {
+  transition: all 0.3s ease !important;
+}
+
+.MuiCard-root:hover {
+  transform: translateY(-4px);
+}
+
+/* Datagrid mejorado */
+.RaDatagrid-root {
+  border-radius: 12px !important;
+  overflow: hidden !important;
+}
+
+.RaDatagrid-headerCell {
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  font-size: 0.75rem !important;
+  letter-spacing: 0.5px !important;
+  color: #64748b !important;
+}
+
+.RaDatagrid-rowCell {
+  font-size: 0.875rem !important;
+  color: #334155 !important;
+}
+
+.RaDatagrid-tbody tr {
+  transition: background-color 0.2s ease !important;
+}
+
+.RaDatagrid-tbody tr:hover {
+  background-color: #f8fafc !important;
+  cursor: pointer;
+}
+
+/* Formularios mejorados */
+.MuiTextField-root {
+  margin-bottom: 16px !important;
+}
+
+.MuiOutlinedInput-root {
+  transition: all 0.2s ease !important;
+}
+
+.MuiOutlinedInput-root:hover {
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+}
+
+.MuiOutlinedInput-root.Mui-focused {
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+/* Chips personalizados */
+.MuiChip-root {
+  font-weight: 500 !important;
+  letter-spacing: 0.3px !important;
+}
+
+.MuiChip-colorPrimary {
+  background-color: #dbeafe !important;
+  color: #1e40af !important;
+}
+
+.MuiChip-colorSecondary {
+  background-color: #fce7f3 !important;
+  color: #9f1239 !important;
+}
+
+.MuiChip-colorSuccess {
+  background-color: #dcfce7 !important;
+  color: #166534 !important;
+}
+
+.MuiChip-colorError {
+  background-color: #fee2e2 !important;
+  color: #991b1b !important;
+}
+
+.MuiChip-colorWarning {
+  background-color: #fef3c7 !important;
+  color: #92400e !important;
+}
+
+/* Lista de recursos */
+.RaList-content {
+  padding: 24px !important;
+  background: transparent !important;
+}
+
+.RaList-main {
+  margin-top: 16px !important;
+}
+
+/* Contenido principal - espacio desde AppBar */
+.RaLayout-content {
+  padding-top: 16px !important;
+}
+
+/* Toolbar de acciones */
+.RaToolbar-root {
+  background-color: transparent !important;
+  padding: 16px 0 !important;
+}
+
+/* TopToolbar (botones de exportar/descargar en listas) */
+.RaTopToolbar-root {
+  background-color: transparent !important;
+  padding: 16px 0 !important;
+}
+
+/* ListActions y FilterButton */
+.RaListToolbar-root {
+  background-color: transparent !important;
+}
+
+/* Acciones de lista */
+.RaListActions-root {
+  background-color: transparent !important;
+}
+
+/* Toolbar superior de cualquier lista */
+.MuiToolbar-root {
+  background-color: transparent !important;
+}
+
+/* Paper dentro de las listas */
+.RaList-main .MuiPaper-root {
+  background-color: #ffffff !important;
+}
+
+/* Eliminar fondo blanco del container de acciones */
+.RaList-actions {
+  background-color: transparent !important;
+}
+
+/* Asegurar que todos los toolbars en móvil sean transparentes */
+@media (max-width: 768px) {
+  .RaTopToolbar-root,
+  .RaListToolbar-root,
+  .RaToolbar-root,
+  .RaListActions-root,
+  .MuiToolbar-root,
+  .RaList-actions {
+    background-color: transparent !important;
+    box-shadow: none !important;
+  }
+}
+
+/* Paginación */
+.MuiTablePagination-root {
+  border-top: 1px solid #e2e8f0 !important;
+  padding: 16px !important;
+}
+
+/* Filtros */
+.RaFilterForm-root {
+  margin-bottom: 16px !important;
+  padding: 16px !important;
+  background-color: #f8fafc !important;
+  border-radius: 8px !important;
+}
+
+/* Avatar en perfil */
+.MuiAvatar-root {
+  transition: transform 0.3s ease !important;
+}
+
+.MuiAvatar-root:hover {
+  transform: scale(1.05);
+}
+
+/* Badges */
+.MuiBadge-badge {
+  font-weight: 600 !important;
+}
+
+/* Tabs */
+.MuiTab-root {
+  text-transform: none !important;
+  font-weight: 500 !important;
+  min-height: 48px !important;
+}
+
+.MuiTab-root.Mui-selected {
+  font-weight: 600 !important;
+}
+
+/* Alertas */
+.MuiAlert-root {
+  border-radius: 8px !important;
+  font-weight: 500 !important;
+}
+
+/* Loading spinner */
+.RaLoadingIndicator-loader {
+  color: #3b82f6 !important;
+}
+
+/* Login page - Estilos mejorados */
+.RaLogin-root {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  min-height: 100vh !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.RaLogin-card {
+  border-radius: 20px !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3) !important;
+  padding: 48px 40px !important;
+  max-width: 450px !important;
+  width: 100% !important;
+  background: #ffffff !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+.RaLogin-avatar {
+  background: transparent !important;
+  width: 220px !important;
+  height: 120px !important;
+  margin: 0 auto 24px !important;
+  box-shadow: none !important;
+  background-image: url('/logo.png') !important;
+  background-size: contain !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+}
+
+/* Ocultar el ícono del candado */
+.RaLogin-icon {
+  display: none !important;
+}
+
+/* Título del login */
+.RaLogin-card .MuiCardContent-root {
+  padding: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+}
+
+/* Formulario de login centrado */
+.RaLogin-card form {
+  width: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+}
+
+/* Inputs del formulario de login */
+.RaLogin-card .MuiTextField-root {
+  margin-bottom: 24px !important;
+  width: 100% !important;
+}
+
+/* Botón centrado y ancho completo */
+.RaLogin-card .MuiButton-root {
+  width: 100% !important;
+}
+
+.RaLogin-card .MuiOutlinedInput-root {
+  border-radius: 12px !important;
+  transition: all 0.3s ease !important;
+}
+
+.RaLogin-card .MuiOutlinedInput-root:hover {
+  box-shadow: none !important;
+}
+
+.RaLogin-card .MuiOutlinedInput-root.Mui-focused {
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.RaLogin-card .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: rgba(0, 0, 0, 0.23) !important;
+  border-width: 1px !important;
+}
+
+/* Eliminar outline del input */
+.RaLogin-card .MuiOutlinedInput-input:focus {
+  outline: none !important;
+}
+
+/* Eliminar outline del TextField completo */
+.RaLogin-card .MuiTextField-root:focus-within {
+  outline: none !important;
+}
+
+/* Botón de login */
+.RaLogin-card .MuiButton-contained {
+  background: #1976d2 !important;
+  border-radius: 12px !important;
+  padding: 14px 24px !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  box-shadow: 0 4px 15px rgba(25, 118, 210, 0.4) !important;
+  transition: all 0.3s ease !important;
+}
+
+.RaLogin-card .MuiButton-contained:hover {
+  background: #1565c0 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 20px rgba(25, 118, 210, 0.5) !important;
+}
+
+/* Labels */
+.RaLogin-card .MuiFormLabel-root {
+  font-weight: 500 !important;
+  color: #475569 !important;
+}
+
+.RaLogin-card .MuiFormLabel-root.Mui-focused {
+  color: #667eea !important;
+}
+
+/* Mensajes de error */
+.RaLogin-card .MuiAlert-root {
+  border-radius: 12px !important;
+  margin-bottom: 24px !important;
+}
+
+/* Animación de entrada */
+.RaLogin-card {
+  animation: fadeInUp 0.6s ease !important;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive para móvil */
+@media (max-width: 768px) {
+  .RaLogin-card {
+    padding: 32px 24px !important;
+    margin: 16px !important;
+    border-radius: 16px !important;
+  }
+
+  .RaLogin-avatar {
+    width: 60px !important;
+    height: 60px !important;
+  }
+}
+
+/* Empty state */
+.RaEmpty-message {
+  color: #64748b !important;
+  font-size: 1.125rem !important;
+}
+
+/* Breadcrumbs */
+.MuiBreadcrumbs-root {
+  font-size: 0.875rem !important;
+  margin-bottom: 16px !important;
+}
+
+.MuiBreadcrumbs-li {
+  color: #64748b !important;
+}
+
+/* Animaciones sutiles */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .RaSidebar-fixed {
+    width: 240px !important;
+  }
+
+  .RaList-content {
+    padding: 12px !important;
+  }
+
+  .RaAppBar-toolbar {
+    padding: 8px 16px !important;
+  }
+}
+
+/* Estados de hover mejorados */
+.clickable-row {
+  transition: all 0.2s ease;
+}
+
+.clickable-row:hover {
+  background-color: #f8fafc !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Mejoras de accesibilidad */
+.MuiButton-root:focus-visible,
+.MuiTextField-root:focus-within {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Separadores */
+.MuiDivider-root {
+  border-color: #e2e8f0 !important;
+}
+
+/* Tooltips */
+.MuiTooltip-tooltip {
+  background-color: #1e293b !important;
+  font-size: 0.875rem !important;
+  padding: 8px 12px !important;
+  border-radius: 6px !important;
+}

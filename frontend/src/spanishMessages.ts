@@ -132,7 +132,24 @@ export const spanishMessages = {
     resources: {
       'Mi Perfil': {
         name: 'Mi perfil |||| Mi perfil',
-        fields: {},
+        fields: {
+          nombre: 'Nombre completo',
+          username: 'Usuario',
+          email: 'Correo electrónico',
+          telefono: 'Teléfono',
+          rol: 'Rol',
+          turno: 'Turno asignado',
+          especialidad: 'Especialidad',
+          numeroEmpleado: 'Número de empleado',
+          fechaIngreso: 'Fecha de ingreso',
+          equipoACargo: 'Equipo a cargo',
+          zona: 'Zona de responsabilidad',
+          departamento: 'Departamento',
+          nivelAcceso: 'Nivel de acceso',
+          passwordActual: 'Contraseña actual',
+          passwordNueva: 'Nueva contraseña',
+          passwordConfirmar: 'Confirmar nueva contraseña',
+        },
       },
       'Folios': {
         name: 'Folios |||| Folios',
@@ -165,6 +182,35 @@ export const spanishMessages = {
         fields: {},
         action: {
           edit: 'Editar',
+        },
+      },
+      'Solicitudes de Modificación': {
+        name: 'Solicitudes de Modificación |||| Solicitudes de Modificación',
+        fields: {
+          folioId: 'Folio #',
+          solicitadoPor: 'Solicitado por',
+          rolSolicitante: 'Rol del solicitante',
+          fechaSolicitud: 'Fecha de solicitud',
+          estadoSolicitud: 'Estado de la solicitud',
+          motivoSolicitud: 'Motivo de la solicitud',
+          camposModificar: 'Campos a modificar',
+          justificacion: 'Justificación',
+          respuestaAdmin: 'Respuesta del administrador',
+          fechaRespuesta: 'Fecha de respuesta',
+        },
+      },
+      'Usuarios': {
+        name: 'Usuarios |||| Usuarios',
+        fields: {
+          username: 'Nombre de usuario',
+          fullName: 'Nombre completo',
+          email: 'Correo electrónico',
+          role: 'Rol',
+          telefono: 'Teléfono',
+          status: 'Estado',
+          fechaCreacion: 'Fecha de creación',
+          ultimoAcceso: 'Último acceso',
+          password: 'Contraseña',
         },
       },
       users: {

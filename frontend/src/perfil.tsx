@@ -1,0 +1,241 @@
+import {
+  TextField,
+  Edit,
+  Show,
+  SimpleShowLayout,
+  SimpleForm,
+  TextInput,
+  EmailField,
+  ChipField,
+  useGetIdentity,
+  usePermissions,
+  PasswordInput,
+} from "react-admin";
+import React from "react";
+import { Typography, Box, Card, CardContent, Grid, Avatar } from "@mui/material";
+import PersonIcon from "@mui/icons-material/Person";
+import { useNavigate } from "react-router-dom";
+
+// Lista redirige automáticamente al perfil del usuario
+export const listarPerfil = () => {
+  const { identity } = useGetIdentity();
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    if (identity?.id) {
+      // Redirigir automáticamente al perfil según el usuario
+      // Los IDs de perfil coinciden con los IDs en el dummyDataProvider
+      const perfilId = identity.id === "admin" ? 1 : identity.id === "jefe" ? 2 : 3;
+      navigate(`/admin/Mi%20Perfil/${perfilId}/show`);
+    }
+  }, [identity, navigate]);
+
+  return (
+    <Box sx={{ p: 3 }}>
+      <Typography>Cargando perfil...</Typography>
+    </Box>
+  );
+};
+
+// Mostrar perfil completo con información según el rol
+export const mostrarHorario = () => {
+  const { permissions } = usePermissions();
+
+  return (
+    <Show>
+      <SimpleShowLayout>
+        <Box sx={{ display: "flex", alignItems: "center", mb: 3 }}>
+          <Avatar sx={{ width: 80, height: 80, mr: 2, bgcolor: "primary.main" }}>
+            <PersonIcon sx={{ fontSize: 50 }} />
+          </Avatar>
+          <Box>
+            <Typography variant="h4" gutterBottom>
+              Mi Perfil
+            </Typography>
+            <ChipField source="rol" label="Rol" />
+          </Box>
+        </Box>
+
+        {/* Información Personal - Todos los roles */}
+        <Card sx={{ mb: 2 }}>
+          <CardContent>
+            <Typography variant="h6" gutterBottom color="primary">
+              Información Personal
+            </Typography>
+            <Grid container spacing={2}>
+              <Grid item xs={12} md={6}>
+                <TextField source="nombre" label="Nombre completo" />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField source="username" label="Usuario" />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <EmailField source="email" label="Correo electrónico" />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField source="telefono" label="Teléfono" />
+              </Grid>
+            </Grid>
+          </CardContent>
+        </Card>
+
+        {/* Información Laboral - Usuario y Jefe de Turno */}
+        {(permissions === "usuario" || permissions === "jefe_turno") && (
+          <Card sx={{ mb: 2 }}>
+            <CardContent>
+              <Typography variant="h6" gutterBottom color="primary">
+                Información Laboral
+              </Typography>
+              <Grid container spacing={2}>
+                <Grid item xs={12} md={6}>
+                  <TextField source="turno" label="Turno asignado" />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <TextField source="especialidad" label="Especialidad" />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <TextField source="numeroEmpleado" label="Número de empleado" />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <TextField source="fechaIngreso" label="Fecha de ingreso" />
+                </Grid>
+              </Grid>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Horario de Trabajo - Usuario y Jefe de Turno */}
+        {(permissions === "usuario" || permissions === "jefe_turno") && (
+          <Card sx={{ mb: 2 }}>
+            <CardContent>
+              <Typography variant="h6" gutterBottom color="primary">
+                Horario de Trabajo
+              </Typography>
+              <Grid container spacing={2}>
+                <Grid item xs={12} md={4}>
+                  <TextField source="horario.horaInicio" label="Hora de entrada" />
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <TextField source="horario.horaFin" label="Hora de salida" />
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <TextField source="horario.diasTrabajo" label="Días de trabajo" />
+                </Grid>
+              </Grid>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Información de Jefe - Solo Jefe de Turno */}
+        {permissions === "jefe_turno" && (
+          <Card sx={{ mb: 2 }}>
+            <CardContent>
+              <Typography variant="h6" gutterBottom color="primary">
+                Información de Supervisión
+              </Typography>
+              <Grid container spacing={2}>
+                <Grid item xs={12} md={6}>
+                  <TextField source="equipoACargo" label="Equipo a cargo" />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <TextField source="zona" label="Zona de responsabilidad" />
+                </Grid>
+              </Grid>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Información Administrativa - Solo Admin */}
+        {permissions === "admin" && (
+          <Card sx={{ mb: 2 }}>
+            <CardContent>
+              <Typography variant="h6" gutterBottom color="primary">
+                Información Administrativa
+              </Typography>
+              <Grid container spacing={2}>
+                <Grid item xs={12} md={6}>
+                  <TextField source="departamento" label="Departamento" />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <TextField source="nivelAcceso" label="Nivel de acceso" />
+                </Grid>
+              </Grid>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Estadísticas - Todos los roles */}
+        <Card>
+          <CardContent>
+            <Typography variant="h6" gutterBottom color="primary">
+              Estadísticas
+            </Typography>
+            <Grid container spacing={2}>
+              <Grid item xs={12} md={4}>
+                <TextField source="estadisticas.foliosCreados" label="Folios creados" />
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <TextField source="estadisticas.foliosCompletados" label="Folios completados" />
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <TextField source="estadisticas.ultimaActividad" label="Última actividad" />
+              </Grid>
+            </Grid>
+          </CardContent>
+        </Card>
+      </SimpleShowLayout>
+    </Show>
+  );
+};
+
+// Editar perfil
+export const editarPerfil = () => {
+  const { permissions } = usePermissions();
+
+  return (
+    <Edit>
+      <SimpleForm>
+        <Typography variant="h6" gutterBottom>
+          Editar Mi Perfil
+        </Typography>
+
+        {/* Información Personal - Todos pueden editar */}
+        <Box sx={{ mb: 3 }}>
+          <Typography variant="subtitle1" gutterBottom color="primary">
+            Información Personal
+          </Typography>
+          <TextInput source="nombre" label="Nombre completo" fullWidth />
+          <TextInput source="email" label="Correo electrónico" type="email" fullWidth />
+          <TextInput source="telefono" label="Teléfono" fullWidth />
+        </Box>
+
+        {/* Cambiar contraseña - Todos */}
+        <Box sx={{ mb: 3 }}>
+          <Typography variant="subtitle1" gutterBottom color="primary">
+            Cambiar Contraseña
+          </Typography>
+          <PasswordInput source="passwordActual" label="Contraseña actual" fullWidth />
+          <PasswordInput source="passwordNueva" label="Nueva contraseña" fullWidth />
+          <PasswordInput source="passwordConfirmar" label="Confirmar nueva contraseña" fullWidth />
+        </Box>
+
+        {/* Información Laboral - Solo usuario y jefe_turno */}
+        {(permissions === "usuario" || permissions === "jefe_turno") && (
+          <Box sx={{ mb: 3 }}>
+            <Typography variant="subtitle1" gutterBottom color="primary">
+              Información Laboral (Solo lectura)
+            </Typography>
+            <TextInput source="turno" label="Turno asignado" fullWidth disabled />
+            <TextInput source="especialidad" label="Especialidad" fullWidth />
+            <TextInput source="numeroEmpleado" label="Número de empleado" fullWidth disabled />
+          </Box>
+        )}
+      </SimpleForm>
+    </Edit>
+  );
+};
+
+// Crear no se usa en perfil, pero lo mantenemos por compatibilidad
+export const crearPerfil = () => (
+  <Typography>No disponible</Typography>
+);

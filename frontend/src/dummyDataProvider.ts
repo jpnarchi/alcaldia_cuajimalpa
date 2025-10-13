@@ -160,13 +160,81 @@ const foliosCreados = [
   { id: 8, folio: "F-008", fecha: "2025-10-13", estado: "Completado", paciente: "Andrea Jiménez" },
 ];
 
-// Datos dummy para "Mi Perfil" (horarios)
-const horarios = [
-  { id: 1, dia: "Lunes", horaInicio: "08:00", horaFin: "16:00", turno: "Matutino" },
-  { id: 2, dia: "Martes", horaInicio: "08:00", horaFin: "16:00", turno: "Matutino" },
-  { id: 3, dia: "Miércoles", horaInicio: "14:00", horaFin: "22:00", turno: "Vespertino" },
-  { id: 4, dia: "Jueves", horaInicio: "08:00", horaFin: "16:00", turno: "Matutino" },
-  { id: 5, dia: "Viernes", horaInicio: "14:00", horaFin: "22:00", turno: "Vespertino" },
+// Datos dummy para "Mi Perfil" (perfiles de usuario)
+const perfiles = [
+  {
+    id: 1,
+    userId: "admin",
+    username: "admin",
+    nombre: "Administrador General",
+    email: "admin@cuajimalpa.gob.mx",
+    telefono: "555-0001",
+    rol: "admin",
+    // Información administrativa
+    departamento: "Dirección General",
+    nivelAcceso: "Total",
+    // Estadísticas
+    estadisticas: {
+      foliosCreados: 0,
+      foliosCompletados: 0,
+      ultimaActividad: "2025-10-13 09:30"
+    }
+  },
+  {
+    id: 2,
+    userId: "jefe",
+    username: "jefe",
+    nombre: "Jefe de Turno",
+    email: "jefe.turno@cuajimalpa.gob.mx",
+    telefono: "555-0002",
+    rol: "jefe_turno",
+    // Información laboral
+    turno: "Matutino",
+    especialidad: "Coordinación de Emergencias",
+    numeroEmpleado: "JT-001",
+    fechaIngreso: "2025-01-15",
+    // Horario de trabajo
+    horario: {
+      horaInicio: "06:00",
+      horaFin: "14:00",
+      diasTrabajo: "Lunes a Viernes"
+    },
+    // Información de supervisión
+    equipoACargo: "8 miembros",
+    zona: "Zona Norte y Centro",
+    // Estadísticas
+    estadisticas: {
+      foliosCreados: 15,
+      foliosCompletados: 12,
+      ultimaActividad: "2025-10-13 08:15"
+    }
+  },
+  {
+    id: 3,
+    userId: "usuario",
+    username: "usuario",
+    nombre: "Usuario Normal",
+    email: "usuario@cuajimalpa.gob.mx",
+    telefono: "555-0003",
+    rol: "usuario",
+    // Información laboral
+    turno: "Vespertino",
+    especialidad: "Atención de Emergencias",
+    numeroEmpleado: "US-003",
+    fechaIngreso: "2025-02-01",
+    // Horario de trabajo
+    horario: {
+      horaInicio: "14:00",
+      horaFin: "22:00",
+      diasTrabajo: "Lunes a Sábado"
+    },
+    // Estadísticas
+    estadisticas: {
+      foliosCreados: 8,
+      foliosCompletados: 7,
+      ultimaActividad: "2025-10-12 16:45"
+    }
+  },
 ];
 
 // Datos dummy para "Equipo" (miembros del equipo)
@@ -261,13 +329,207 @@ const equipoMiembros = [
   },
 ];
 
+// Datos dummy para "Solicitudes de Modificación"
+const solicitudesModificacion = [
+  {
+    id: 1,
+    folioId: 1,
+    solicitadoPor: "Dr. Juan Pérez",
+    rolSolicitante: "usuario",
+    fechaSolicitud: "2025-10-11T10:30:00",
+    estadoSolicitud: "Pendiente",
+    motivoSolicitud: "Error en ubicación registrada",
+    camposModificar: "ubicacion, kmRecorridos",
+    justificacion: "La ubicación registrada es incorrecta. El servicio se realizó en Av. Juárez 456, no en el 123. También los km recorridos fueron 6.5 km en lugar de 5.2 km.",
+    folioOriginal: {
+      id: 1,
+      diaFechaHora: "2025-10-10 08:30",
+      nombrePersonal: "Dr. Juan Pérez",
+      tipoServicio: "Petición de mitigación de riesgo",
+      ubicacion: "Av. Juárez 123, Col. Centro"
+    },
+    respuestaAdmin: null,
+    fechaRespuesta: null
+  },
+  {
+    id: 2,
+    folioId: 3,
+    solicitadoPor: "Dr. Carlos Ramírez",
+    rolSolicitante: "usuario",
+    fechaSolicitud: "2025-10-11T14:20:00",
+    estadoSolicitud: "Pendiente",
+    motivoSolicitud: "Falta información en observaciones",
+    camposModificar: "observaciones, conclusion",
+    justificacion: "Necesito agregar información adicional sobre las medidas preventivas recomendadas al responsable del inmueble que no fueron incluidas en el reporte inicial.",
+    folioOriginal: {
+      id: 3,
+      diaFechaHora: "2025-10-11 10:15",
+      nombrePersonal: "Dr. Carlos Ramírez",
+      tipoServicio: "Petición de mitigación de riesgo",
+      ubicacion: "Av. Constituyentes 789, Col. San Pedro"
+    },
+    respuestaAdmin: null,
+    fechaRespuesta: null
+  },
+  {
+    id: 3,
+    folioId: 4,
+    solicitadoPor: "Dra. Ana Martínez",
+    rolSolicitante: "usuario",
+    fechaSolicitud: "2025-10-12T09:00:00",
+    estadoSolicitud: "Aprobada",
+    motivoSolicitud: "Corrección de autoridades participantes",
+    camposModificar: "autoridades",
+    justificacion: "Faltó registrar la participación de Cruz Roja en la atención de la emergencia múltiple.",
+    folioOriginal: {
+      id: 4,
+      diaFechaHora: "2025-10-11 16:45",
+      nombrePersonal: "Dra. Ana Martínez",
+      tipoServicio: "Petición de mitigación de riesgo",
+      ubicacion: "Calle Morelos 234, Col. Guadalupe"
+    },
+    respuestaAdmin: "Solicitud aprobada. Puede proceder con la modificación del campo de autoridades para incluir Cruz Roja.",
+    fechaRespuesta: "2025-10-12T11:30:00"
+  },
+  {
+    id: 4,
+    folioId: 6,
+    solicitadoPor: "Dr. Roberto Silva",
+    rolSolicitante: "usuario",
+    fechaSolicitud: "2025-10-12T16:45:00",
+    estadoSolicitud: "Rechazada",
+    motivoSolicitud: "Cambio de conclusión",
+    camposModificar: "conclusion",
+    justificacion: "Quiero modificar la conclusión del folio.",
+    folioOriginal: {
+      id: 6,
+      diaFechaHora: "2025-10-12 14:00",
+      nombrePersonal: "Dr. Roberto Silva",
+      tipoServicio: "Petición de mitigación de riesgo",
+      ubicacion: "Calle Hidalgo 890, Col. Centro Histórico"
+    },
+    respuestaAdmin: "Solicitud rechazada. La justificación no es suficientemente específica. Por favor proporcione más detalles sobre qué cambios exactos necesita realizar en la conclusión y el motivo técnico.",
+    fechaRespuesta: "2025-10-12T18:00:00"
+  },
+  {
+    id: 5,
+    folioId: 7,
+    solicitadoPor: "Dra. Patricia Ruiz",
+    rolSolicitante: "usuario",
+    fechaSolicitud: "2025-10-13T08:30:00",
+    estadoSolicitud: "Pendiente",
+    motivoSolicitud: "Error en tiempo de traslado",
+    camposModificar: "tiempoTraslado, trabajosRealizados",
+    justificacion: "El tiempo de traslado registrado fue de 10 minutos pero en realidad fueron 15 minutos debido al tráfico. También necesito agregar detalles sobre las verificaciones realizadas en los trabajos.",
+    folioOriginal: {
+      id: 7,
+      diaFechaHora: "2025-10-13 07:20",
+      nombrePersonal: "Dra. Patricia Ruiz",
+      tipoServicio: "Petición de mitigación de riesgo",
+      ubicacion: "Av. Universidad 345, Col. Copilco"
+    },
+    respuestaAdmin: null,
+    fechaRespuesta: null
+  },
+];
+
+// Datos dummy para "Usuarios"
+const usuarios = [
+  {
+    id: 1,
+    username: "admin",
+    password: "admin", // En producción, esto debe estar hasheado
+    fullName: "Administrador General",
+    email: "admin@cuajimalpa.gob.mx",
+    role: "admin",
+    telefono: "555-0001",
+    status: "Activo",
+    fechaCreacion: "2025-01-01",
+    ultimoAcceso: "2025-10-13 09:30"
+  },
+  {
+    id: 2,
+    username: "jefe",
+    password: "jefe",
+    fullName: "Jefe de Turno",
+    email: "jefe.turno@cuajimalpa.gob.mx",
+    role: "jefe_turno",
+    telefono: "555-0002",
+    status: "Activo",
+    fechaCreacion: "2025-01-15",
+    ultimoAcceso: "2025-10-13 08:15"
+  },
+  {
+    id: 3,
+    username: "usuario",
+    password: "usuario",
+    fullName: "Usuario",
+    email: "usuario@cuajimalpa.gob.mx",
+    role: "usuario",
+    telefono: "555-0003",
+    status: "Activo",
+    fechaCreacion: "2025-02-01",
+    ultimoAcceso: "2025-10-12 16:45"
+  },
+  {
+    id: 4,
+    username: "jperez",
+    password: "jperez123",
+    fullName: "Dr. Juan Pérez",
+    email: "juan.perez@cuajimalpa.gob.mx",
+    role: "usuario",
+    telefono: "555-1234",
+    status: "Activo",
+    fechaCreacion: "2025-03-10",
+    ultimoAcceso: "2025-10-13 07:20"
+  },
+  {
+    id: 5,
+    username: "mgonzalez",
+    password: "mgonzalez123",
+    fullName: "Dra. María González",
+    email: "maria.gonzalez@cuajimalpa.gob.mx",
+    role: "usuario",
+    telefono: "555-5678",
+    status: "Activo",
+    fechaCreacion: "2025-03-15",
+    ultimoAcceso: "2025-10-12 14:30"
+  },
+  {
+    id: 6,
+    username: "cramirez",
+    password: "cramirez123",
+    fullName: "Dr. Carlos Ramírez",
+    email: "carlos.ramirez@cuajimalpa.gob.mx",
+    role: "jefe_turno",
+    telefono: "555-9012",
+    status: "Activo",
+    fechaCreacion: "2025-04-01",
+    ultimoAcceso: "2025-10-13 06:00"
+  },
+  {
+    id: 7,
+    username: "amartinez",
+    password: "amartinez123",
+    fullName: "Dra. Ana Martínez",
+    email: "ana.martinez@cuajimalpa.gob.mx",
+    role: "usuario",
+    telefono: "555-3456",
+    status: "Inactivo",
+    fechaCreacion: "2025-05-10",
+    ultimoAcceso: "2025-09-30 18:00"
+  },
+];
+
 // Almacenamiento en memoria para simular persistencia
 const data: Record<string, any[]> = {
   "Folios": [...folios],
   "Crear folio": [...folios], // Mantener compatibilidad
   "Folios creados": [...foliosCreados],
-  "Mi Perfil": [...horarios],
+  "Mi Perfil": [...perfiles],
   "Equipo": [...equipoMiembros],
+  "Usuarios": [...usuarios],
+  "Solicitudes de Modificación": [...solicitudesModificacion],
 };
 
 // Función auxiliar para generar nuevo ID

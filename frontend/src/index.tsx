@@ -5,6 +5,7 @@ import { App } from "./App";
 import { HeroSection } from "./components/HeroSection";
 import Registrarse from "./register";
 import "./styles/global.css";
+import "./customStyles.css";
 
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

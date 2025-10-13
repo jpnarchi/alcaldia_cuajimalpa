@@ -3,13 +3,27 @@ import { Layout } from "./Layout";
 // import { dataProvider } from "./dataProvider"; // Backend real - comentado temporalmente
 import { dummyDataProvider } from "./dummyDataProvider"; // Datos dummy para desarrollo
 import { i18nProvider } from "./i18nProvider";
+import { customTheme } from "./theme";
 import {listarReporte, crearReporte, editarReporte, mostrarReporte} from  "./reportes";
 import {Route} from "react-router-dom";
-import {listarHorarios, crearHorarios, editarHorarios, mostrarHorario} from "./horarios";
+import { listarPerfil, crearPerfil, editarPerfil, mostrarHorario} from "./perfil";
 import Registrarse from "./register";
 import { listarFolio, crearFolio, editarFolio, mostrarFolio } from "./ver-folios";
 import { listarEquipo, crearEquipo, editarEquipo, mostrarEquipo } from "./equipo";
 import { listarReporteEquipo, crearReporteEquipo, editarReporteEquipo, mostrarReporteEquipo } from "./reportes-mi-equipo";
+import { listarUsuarios, crearUsuario, editarUsuario, mostrarUsuario } from "./usuarios";
+import { listarSolicitudes, editarSolicitud, mostrarSolicitud } from "./solicitud-modificaciones";
+
+// Iconos de lucide-react
+import {
+  User,
+  FileText,
+  FolderOpen,
+  ClipboardList,
+  Users,
+  FilePenLine,
+  UserCog
+} from "lucide-react";
 
 // AuthProvider con bypass hardcodeado - admin/admin
 
@@ -73,6 +87,7 @@ export const App = () => {
       dataProvider={dummyDataProvider}
       authProvider={authProvider}
       i18nProvider={i18nProvider}
+      theme={customTheme}
       basename="/admin"
     >
       {(permissions: any) => {
@@ -83,10 +98,11 @@ export const App = () => {
             {/* Recurso Mi Perfil - Todos los roles */}
             <Resource
               name="Mi Perfil"
-              list={listarHorarios}
-              create={crearHorarios}
-              edit={editarHorarios}
+              list={listarPerfil}
+              create={crearPerfil}
+              edit={editarPerfil}
               show={mostrarHorario}
+              icon={User}
             />
 
             {/* Recurso Folios - Todos los roles pueden ver/crear */}
@@ -97,6 +113,7 @@ export const App = () => {
               create={crearFolio}
               edit={userRole === "usuario" ? editarFolio : undefined}
               show={mostrarFolio}
+              icon={FileText}
             />
             )}
             {/* Recurso Folios creados - Solo admin y jefe_turno */}
@@ -107,6 +124,7 @@ export const App = () => {
                 create={crearReporte}
                 edit={userRole === "admin" ? editarReporte : undefined}
                 show={mostrarReporte}
+                icon={FolderOpen}
               />
             )}
 
@@ -118,6 +136,7 @@ export const App = () => {
                 create={crearReporteEquipo}
                 edit={editarReporteEquipo}
                 show={mostrarReporteEquipo}
+                icon={ClipboardList}
               />
             )}
 
@@ -129,6 +148,30 @@ export const App = () => {
                 create={crearEquipo}
                 edit={editarEquipo}
                 show={mostrarEquipo}
+                icon={Users}
+              />
+            )}
+
+            {/* Recurso Solicitudes de Modificación - Solo admin */}
+            {userRole === "admin" && (
+              <Resource
+                name="Solicitudes de Modificación"
+                list={listarSolicitudes}
+                edit={editarSolicitud}
+                show={mostrarSolicitud}
+                icon={FilePenLine}
+              />
+            )}
+
+            {/* Recurso Usuarios - Solo admin */}
+            {userRole === "admin" && (
+              <Resource
+                name="Usuarios"
+                list={listarUsuarios}
+                create={crearUsuario}
+                edit={editarUsuario}
+                show={mostrarUsuario}
+                icon={UserCog}
               />
             )}
 
