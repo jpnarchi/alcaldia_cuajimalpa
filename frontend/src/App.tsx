@@ -1,7 +1,8 @@
-import {Admin, Resource, CustomRoutes, AuthProvider, usePermissions} from "react-admin";
+import {Admin, Resource, CustomRoutes, usePermissions} from "react-admin";
 import { Layout } from "./Layout";
-// import { dataProvider } from "./dataProvider"; // Backend real - comentado temporalmente
-import { dummyDataProvider } from "./dummyDataProvider"; // Datos dummy para desarrollo
+import { dataProvider } from "./dataProvider"; // Backend real conectado a MongoDB
+import authProvider from "./AuthProvider"; // AuthProvider conectado a MongoDB
+// import { dummyDataProvider } from "./dummyDataProvider"; // Datos dummy para desarrollo
 import { i18nProvider } from "./i18nProvider";
 import { customTheme } from "./theme";
 import {listarReporte, crearReporte, editarReporte, mostrarReporte} from  "./reportes";
@@ -25,66 +26,11 @@ import {
   UserCog
 } from "lucide-react";
 
-// AuthProvider con bypass hardcodeado - admin/admin
-
-// COMENTAR CUANDO SE TERMINE EL PROYECTO
-// Usuarios de prueba con diferentes roles
-const usersDemo = {
-  admin: { password: "admin", role: "admin", fullName: "Administrador General" },
-  jefe: { password: "jefe", role: "jefe_turno", fullName: "Jefe de Turno" },
-  usuario: { password: "usuario", role: "usuario", fullName: "Usuario" },
-};
-
-const authProvider: AuthProvider = {
-  login: async ({ username, password }) => {
-    // Verificar usuario y contraseña
-    const user = usersDemo[username as keyof typeof usersDemo];
-
-    if (user && user.password === password) {
-      sessionStorage.setItem("auth", "bypass-token");
-      sessionStorage.setItem("identity", JSON.stringify({
-        id: username,
-        fullName: user.fullName
-      }));
-      sessionStorage.setItem("role", user.role);
-      return Promise.resolve();
-    }
-    throw new Error("Usuario o contraseña incorrectos");
-  },
-  logout: () => {
-    sessionStorage.removeItem("auth");
-    sessionStorage.removeItem("identity");
-    sessionStorage.removeItem("role");
-    return Promise.resolve();
-  },
-  checkAuth: () => {
-    return sessionStorage.getItem("auth") ? Promise.resolve() : Promise.reject();
-  },
-  checkError: (error) => {
-    const status = error.status;
-    if (status === 401 || status === 403) {
-      sessionStorage.removeItem("auth");
-      sessionStorage.removeItem("identity");
-      sessionStorage.removeItem("role");
-      return Promise.reject();
-    }
-    return Promise.resolve();
-  },
-  getIdentity: () => {
-    const identity = sessionStorage.getItem("identity");
-    return identity ? Promise.resolve(JSON.parse(identity)) : Promise.reject();
-  },
-  getPermissions: () => {
-    const role = sessionStorage.getItem("role");
-    return Promise.resolve(role || "usuario");
-  }
-};
-
 export const App = () => {
   return (
     <Admin
       layout={Layout}
-      dataProvider={dummyDataProvider}
+      dataProvider={dataProvider}
       authProvider={authProvider}
       i18nProvider={i18nProvider}
       theme={customTheme}
@@ -97,7 +43,8 @@ export const App = () => {
           <>
             {/* Recurso Mi Perfil - Todos los roles */}
             <Resource
-              name="Mi Perfil"
+              name="perfiles"
+              options={{ label: "Mi Perfil" }}
               list={listarPerfil}
               create={crearPerfil}
               edit={editarPerfil}
@@ -108,7 +55,8 @@ export const App = () => {
             {/* Recurso Folios - Todos los roles pueden ver/crear */}
             {userRole === "usuario" && (
             <Resource
-              name="Folios"
+              name="folios"
+              options={{ label: "Folios" }}
               list={listarFolio}
               create={crearFolio}
               edit={userRole === "usuario" ? editarFolio : undefined}
@@ -119,7 +67,8 @@ export const App = () => {
             {/* Recurso Folios creados - Solo admin y jefe_turno */}
             {(userRole === "admin") && (
               <Resource
-                name="Folios creados"
+                name="foliosCreados"
+                options={{ label: "Folios Creados" }}
                 list={listarReporte}
                 create={crearReporte}
                 edit={userRole === "admin" ? editarReporte : undefined}
@@ -131,7 +80,8 @@ export const App = () => {
             {/* Recurso Reportes de mi equipo - Solo jefe_turno */}
             {userRole === "jefe_turno" && (
               <Resource
-                name="Reportes de mi equipo"
+                name="folios"
+                options={{ label: "Reportes de mi equipo" }}
                 list={listarReporteEquipo}
                 create={crearReporteEquipo}
                 edit={editarReporteEquipo}
@@ -143,7 +93,8 @@ export const App = () => {
             {/* Recurso Equipo - Solo jefe_turno */}
             {userRole === "jefe_turno" && (
               <Resource
-                name="Equipo"
+                name="equipoMiembros"
+                options={{ label: "Equipo" }}
                 list={listarEquipo}
                 create={crearEquipo}
                 edit={editarEquipo}
@@ -155,7 +106,8 @@ export const App = () => {
             {/* Recurso Solicitudes de Modificación - Solo admin */}
             {userRole === "admin" && (
               <Resource
-                name="Solicitudes de Modificación"
+                name="solicitudesModificacion"
+                options={{ label: "Solicitudes de Modificación" }}
                 list={listarSolicitudes}
                 edit={editarSolicitud}
                 show={mostrarSolicitud}
@@ -166,7 +118,8 @@ export const App = () => {
             {/* Recurso Usuarios - Solo admin */}
             {userRole === "admin" && (
               <Resource
-                name="Usuarios"
+                name="usuarios"
+                options={{ label: "Usuarios" }}
                 list={listarUsuarios}
                 create={crearUsuario}
                 edit={editarUsuario}
