@@ -134,11 +134,11 @@ export const spanishMessages = {
         name: 'Mi perfil |||| Mi perfil',
         fields: {},
       },
-      'Crear folio': {
-        name: 'Crear folio |||| Crear folio',
+      'Folios': {
+        name: 'Folios |||| Folios',
         fields: {},
         action: {
-          edit: 'Editar',
+          edit: 'Solicitar modificación',
         },
       },
       'Folios creados': {
@@ -146,6 +146,25 @@ export const spanishMessages = {
         fields: {},
         action: {
           edit: 'Solicitar modificación',
+        },
+      },
+      'Equipo': {
+        name: 'Equipo |||| Equipo',
+        fields: {
+          nombre: 'Nombre',
+          rol: 'Rol',
+          turno: 'Turno',
+          telefono: 'Teléfono',
+          email: 'Correo electrónico',
+          especialidad: 'Especialidad',
+          status: 'Estado',
+        },
+      },
+      'Reportes de mi equipo': {
+        name: 'Reportes de mi equipo |||| Reportes de mi equipo',
+        fields: {},
+        action: {
+          edit: 'Editar',
         },
       },
       users: {

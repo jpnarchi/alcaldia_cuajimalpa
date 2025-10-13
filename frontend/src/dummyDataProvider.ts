@@ -169,11 +169,105 @@ const horarios = [
   { id: 5, dia: "Viernes", horaInicio: "14:00", horaFin: "22:00", turno: "Vespertino" },
 ];
 
+// Datos dummy para "Equipo" (miembros del equipo)
+const equipoMiembros = [
+  {
+    id: 1,
+    nombre: "Dr. Juan Pérez",
+    rol: "Paramédico",
+    turno: "Matutino",
+    telefono: "555-1234",
+    email: "juan.perez@cuajimalpa.gob.mx",
+    jefeId: "jefe", // ID del jefe de turno
+    especialidad: "Medicina de emergencia",
+    status: "Activo"
+  },
+  {
+    id: 2,
+    nombre: "Dra. María González",
+    rol: "Paramédico",
+    turno: "Vespertino",
+    telefono: "555-5678",
+    email: "maria.gonzalez@cuajimalpa.gob.mx",
+    jefeId: "jefe",
+    especialidad: "Primeros auxilios",
+    status: "Activo"
+  },
+  {
+    id: 3,
+    nombre: "Dr. Carlos Ramírez",
+    rol: "Técnico de emergencias",
+    turno: "Matutino",
+    telefono: "555-9012",
+    email: "carlos.ramirez@cuajimalpa.gob.mx",
+    jefeId: "jefe",
+    especialidad: "Rescate urbano",
+    status: "Activo"
+  },
+  {
+    id: 4,
+    nombre: "Dra. Ana Martínez",
+    rol: "Paramédico",
+    turno: "Vespertino",
+    telefono: "555-3456",
+    email: "ana.martinez@cuajimalpa.gob.mx",
+    jefeId: "jefe",
+    especialidad: "Atención prehospitalaria",
+    status: "Activo"
+  },
+  {
+    id: 5,
+    nombre: "Dr. Luis Hernández",
+    rol: "Conductor ambulancia",
+    turno: "Matutino",
+    telefono: "555-7890",
+    email: "luis.hernandez@cuajimalpa.gob.mx",
+    jefeId: "jefe",
+    especialidad: "Manejo de vehículos de emergencia",
+    status: "Activo"
+  },
+  {
+    id: 6,
+    nombre: "Dr. Roberto Silva",
+    rol: "Técnico de emergencias",
+    turno: "Vespertino",
+    telefono: "555-2345",
+    email: "roberto.silva@cuajimalpa.gob.mx",
+    jefeId: "jefe",
+    especialidad: "Evaluación de riesgos",
+    status: "Activo"
+  },
+  {
+    id: 7,
+    nombre: "Dra. Patricia Ruiz",
+    rol: "Paramédico",
+    turno: "Matutino",
+    telefono: "555-6789",
+    email: "patricia.ruiz@cuajimalpa.gob.mx",
+    jefeId: "jefe",
+    especialidad: "Atención médica de urgencia",
+    status: "Activo"
+  },
+  {
+    id: 8,
+    nombre: "Dr. Fernando Torres",
+    rol: "Conductor ambulancia",
+    turno: "Vespertino",
+    telefono: "555-0123",
+    email: "fernando.torres@cuajimalpa.gob.mx",
+    jefeId: "jefe",
+    especialidad: "Logística de emergencias",
+    status: "Activo"
+  },
+];
+
 // Almacenamiento en memoria para simular persistencia
 const data: Record<string, any[]> = {
-  "Crear folio": [...folios],
+  "Folios": [...folios],
+  "Crear folio": [...folios], // Mantener compatibilidad
   "Folios creados": [...foliosCreados],
   "Mi Perfil": [...horarios],
+  "Equipo": [...equipoMiembros],
 };
 
 // Función auxiliar para generar nuevo ID
