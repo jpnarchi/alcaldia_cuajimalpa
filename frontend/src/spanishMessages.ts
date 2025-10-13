@@ -20,8 +20,7 @@ export const spanishMessages = {
         list: 'Lista',
         refresh: 'Actualizar',
         toggle_theme: 'Cambiar tema',
-        
-        
+        unselect: 'Deseleccionar',
         remove_filter: 'Quitar filtro',
         remove_all_filters: 'Quitar todos los filtros',
         save: 'Guardar',
@@ -100,6 +99,13 @@ export const spanishMessages = {
         next: 'Siguiente',
         prev: 'Anterior',
       },
+      sort: {
+        ASC: 'Ascendente',
+        DESC: 'Descendente',
+      },
+      configurable: {
+        customize: 'Personalizar',
+      },
       notification: {
         updated: 'Elemento actualizado |||| %{smart_count} elementos actualizados',
         created: 'Elemento creado',
@@ -120,10 +126,28 @@ export const spanishMessages = {
         open: 'Abrir/Cerrar menú',
       },
       user: {
-        profile: 'Perfil',
+        profile: 'Mi perfil',
       },
     },
     resources: {
+      'Mi Perfil': {
+        name: 'Mi perfil |||| Mi perfil',
+        fields: {},
+      },
+      'Crear folio': {
+        name: 'Crear folio |||| Crear folio',
+        fields: {},
+        action: {
+          edit: 'Editar',
+        },
+      },
+      'Folios creados': {
+        name: 'Folios creados |||| Folios creados',
+        fields: {},
+        action: {
+          edit: 'Solicitar modificación',
+        },
+      },
       users: {
         name: 'Usuario |||| Usuarios',
       },

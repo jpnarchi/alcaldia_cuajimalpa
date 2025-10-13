@@ -1,39 +1,79 @@
-import {Datagrid, List, TextField, Create, SimpleForm, TextInput, SelectInput, Edit} from "react-admin";
+import {
+  Datagrid,
+  List,
+  TextField,
+  Create,
+  SimpleForm,
+  TextInput,
+  SelectInput,
+  Edit,
+  Show,
+  SimpleShowLayout,
+} from "react-admin";
+import React from "react";
+import { Typography } from "@mui/material";
 
-export const listarReporte=()=>(
- <List>
-  <Datagrid>
-   <TextField source="id" label="folio"/>
-   <TextField source="paramedico"/>
-   <TextField source="nivel"/>
-  </Datagrid>
- </List>
+export const listarReporte = () => (
+  <List>
+    <Datagrid rowClick="show">
+      <TextField source="folio" label="Folio" />
+      <TextField source="fecha" label="Fecha" />
+      <TextField source="estado" label="Estado" />
+      <TextField source="paciente" label="Paciente" />
+    </Datagrid>
+  </List>
 );
 
-export const editarReporte=()=>(
-    <Edit>
-        <SimpleForm>
-            <TextInput source="id" label="Folio"/>
-            <TextInput source="paramedico" />
-            <SelectInput source="nivel" choices={[
-                {id: "alto", name: "alto"},
-                {id: "medio", name: "medio"},
-                {id: "bajo", name: "bajo"}
-            ]} />
-        </SimpleForm>
-    </Edit>
+export const mostrarReporte = () => (
+  <Show>
+    <SimpleShowLayout>
+      <Typography variant="h5" gutterBottom>
+        Detalles del Folio
+      </Typography>
+      <TextField source="folio" label="Número de Folio" />
+      <TextField source="fecha" label="Fecha" />
+      <TextField source="estado" label="Estado" />
+      <TextField source="paciente" label="Paciente" />
+    </SimpleShowLayout>
+  </Show>
 );
 
-export const crearReporte=()=>(
-    <Create>
-        <SimpleForm>
-            <TextInput source="id" label="Folio"/>
-            <TextInput source="paramedico" />
-            <SelectInput source="nivel" choices={[
-                {id: "alto", name: "alto"},
-                {id: "medio", name: "medio"},
-                {id: "bajo", name: "bajo"}
-            ]} />
-        </SimpleForm>
-    </Create>
+export const editarReporte = () => (
+  <Edit l>
+    <SimpleForm>
+      <TextInput source="folio" label="Folio" fullWidth />
+      <TextInput source="fecha" label="Fecha" fullWidth />
+      <SelectInput
+        source="estado"
+        label="Estado"
+        choices={[
+          { id: "Completado", name: "Completado" },
+          { id: "En proceso", name: "En proceso" },
+          { id: "Pendiente", name: "Pendiente" },
+        ]}
+        fullWidth
+      />
+      <TextInput source="paciente" label="Paciente" fullWidth />
+    </SimpleForm>
+  </Edit>
+);
+
+export const crearReporte = () => (
+  <Create>
+    <SimpleForm>
+      <TextInput source="folio" label="Folio" fullWidth />
+      <TextInput source="fecha" label="Fecha" fullWidth />
+      <SelectInput
+        source="estado"
+        label="Estado"
+        choices={[
+          { id: "Completado", name: "Completado" },
+          { id: "En proceso", name: "En proceso" },
+          { id: "Pendiente", name: "Pendiente" },
+        ]}
+        fullWidth
+      />
+      <TextInput source="paciente" label="Paciente" fullWidth />
+    </SimpleForm>
+  </Create>
 );

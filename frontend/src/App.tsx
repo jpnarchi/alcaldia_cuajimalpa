@@ -1,10 +1,13 @@
 import {Admin,Resource, CustomRoutes, AuthProvider} from "react-admin";
 import { Layout } from "./Layout";
-import { dataProvider } from "./dataProvider";
-import {listarReporte, crearReporte, editarReporte} from "./reportes"
+// import { dataProvider } from "./dataProvider"; // Backend real - comentado temporalmente
+import { dummyDataProvider } from "./dummyDataProvider"; // Datos dummy para desarrollo
+import {listarReporte, crearReporte, editarReporte, mostrarReporte} from  "./reportes"
 import {Route} from "react-router-dom"
-import {listarHorarios, crearHorarios, editarHorarios} from "./horarios"
+import {listarHorarios, crearHorarios, editarHorarios, mostrarHorario} from "./horarios"
 import Registrarse from "./register";
+import { i18nProvider } from "./i18nProvider";
+import { listarFolio, crearFolio, editarFolio, mostrarFolio } from "./ver-folios";
 
 // AuthProvider con bypass hardcodeado - admin/admin 
 
@@ -44,22 +47,29 @@ const authProvider: AuthProvider = {
 };
 
 export const App = () => (
-  <Admin 
-    layout={Layout} 
-    dataProvider={dataProvider} 
+  <Admin
+    layout={Layout}
+    dataProvider={dummyDataProvider}
     authProvider={authProvider}
+    i18nProvider={i18nProvider}
     basename="/admin"
   >
     <Resource
-      name="horarios"
-      list={listarHorarios} create={crearHorarios} edit={editarHorarios} 
+      name="Mi Perfil"
+      list={listarHorarios} create={crearHorarios} edit={editarHorarios} show={mostrarHorario}
     />
     <Resource
-      name="reportes"
-      list={listarReporte} create={crearReporte} edit={editarReporte} 
+      name="Crear folio"
+      list={listarFolio} create={crearFolio} edit={editarFolio} show={mostrarFolio}
+    />
+    <Resource
+      name="Folios creados"
+      list={listarReporte} create={crearReporte} edit={editarReporte} show={mostrarReporte}
     />
     <CustomRoutes>
       <Route path="/registrarse" element={<Registrarse />}/>
     </CustomRoutes>
   </Admin>
 );
+
+// En folios creados que haya un boton para ver folio
