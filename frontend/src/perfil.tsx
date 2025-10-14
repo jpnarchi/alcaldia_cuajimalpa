@@ -20,19 +20,69 @@ import { useNavigate } from "react-router-dom";
 export const listarPerfil = () => {
   const { identity } = useGetIdentity();
   const navigate = useNavigate();
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState(false);
 
   React.useEffect(() => {
-    if (identity?.id) {
-      // Redirigir automáticamente al perfil según el usuario
-      // Los IDs de perfil coinciden con los IDs en el dummyDataProvider
-      const perfilId = identity.id === "admin" ? 1 : identity.id === "jefe" ? 2 : 3;
-      navigate(`/admin/Mi%20Perfil/${perfilId}/show`);
-    }
+    const buscarPerfil = async () => {
+      if (identity?.id) {
+        try {
+          const token = localStorage.getItem('token');
+
+          // Buscar el perfil del usuario actual por username
+          const response = await fetch(`http://localhost:3000/perfiles?username=${identity.id}`, {
+            headers: {
+              'Authentication': token || '',
+              'Accept': 'application/json',
+            },
+          });
+
+          if (response.ok) {
+            const perfiles = await response.json();
+
+            if (perfiles && perfiles.length > 0) {
+              // Redirigir al perfil encontrado
+              navigate(`/admin/perfiles/${perfiles[0].id}/show`);
+            } else {
+              setError(true);
+              setLoading(false);
+            }
+          } else {
+            setError(true);
+            setLoading(false);
+          }
+        } catch (err) {
+          console.error('Error buscando perfil:', err);
+          setError(true);
+          setLoading(false);
+        }
+      }
+    };
+
+    buscarPerfil();
   }, [identity, navigate]);
+
+  if (loading) {
+    return (
+      <Box sx={{ p: 3 }}>
+        <Typography>Cargando perfil...</Typography>
+      </Box>
+    );
+  }
+
+  if (error) {
+    return (
+      <Box sx={{ p: 3 }}>
+        <Typography color="error">
+          No se encontró un perfil para este usuario. Por favor, contacta al administrador.
+        </Typography>
+      </Box>
+    );
+  }
 
   return (
     <Box sx={{ p: 3 }}>
-      <Typography>Cargando perfil...</Typography>
+      <Typography>Redirigiendo...</Typography>
     </Box>
   );
 };

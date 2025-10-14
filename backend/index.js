@@ -675,8 +675,61 @@ app.post("/usuarios", async (req, res) => {
 
 		await db.collection("usuarios").insertOne(valores);
 		log(user, "usuarios", "crear");
+
+		// Crear perfil automáticamente para el nuevo usuario
+		let lastPerfilDoc = await db.collection("perfiles").find({}).sort({ id: -1 }).limit(1).toArray();
+		let perfilId = lastPerfilDoc.length > 0 ? lastPerfilDoc[0].id + 1 : 1;
+
+		let nuevoPerfil = {
+			id: perfilId,
+			userId: valores.username,
+			username: valores.username,
+			nombre: valores.fullName || "",
+			email: valores.email || "",
+			telefono: valores.telefono || "",
+			rol: valores.role || "usuario",
+			// Estadísticas iniciales
+			estadisticas: {
+				foliosCreados: 0,
+				foliosCompletados: 0,
+				ultimaActividad: new Date().toISOString()
+			}
+		};
+
+		// Agregar campos según el rol
+		if (valores.role === "admin") {
+			nuevoPerfil.departamento = "";
+			nuevoPerfil.nivelAcceso = "";
+		} else if (valores.role === "jefe_turno") {
+			nuevoPerfil.turno = "";
+			nuevoPerfil.especialidad = "";
+			nuevoPerfil.numeroEmpleado = "";
+			nuevoPerfil.fechaIngreso = "";
+			nuevoPerfil.horario = {
+				horaInicio: "",
+				horaFin: "",
+				diasTrabajo: ""
+			};
+			nuevoPerfil.equipoACargo = "";
+			nuevoPerfil.zona = "";
+		} else {
+			nuevoPerfil.turno = "";
+			nuevoPerfil.especialidad = "";
+			nuevoPerfil.numeroEmpleado = "";
+			nuevoPerfil.fechaIngreso = "";
+			nuevoPerfil.horario = {
+				horaInicio: "",
+				horaFin: "",
+				diasTrabajo: ""
+			};
+		}
+
+		await db.collection("perfiles").insertOne(nuevoPerfil);
+		log(user, "perfiles", "crear automático");
+
 		res.json(valores);
-	} catch {
+	} catch (error) {
+		console.error("Error al crear usuario:", error);
 		res.sendStatus(401);
 	}
 });
