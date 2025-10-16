@@ -12,8 +12,9 @@ import {
   EmailField,
   ChipField,
   PasswordInput,
+  FormDataConsumer,
+  DeleteButton,
 } from "react-admin";
-import React from "react";
 import { Typography, Box } from "@mui/material";
 
 export const listarUsuarios = () => (
@@ -23,7 +24,9 @@ export const listarUsuarios = () => (
       <TextField source="fullName" label="Nombre completo" />
       <EmailField source="email" label="Correo" />
       <ChipField source="role" label="Rol" />
+      <TextField source="turno" label="Turno" />
       <ChipField source="status" label="Estado" />
+      <DeleteButton />
     </Datagrid>
   </List>
 );
@@ -43,6 +46,7 @@ export const mostrarUsuario = () => (
         <TextField source="fullName" label="Nombre completo" />
         <EmailField source="email" label="Correo electrónico" />
         <ChipField source="role" label="Rol" />
+        <TextField source="turno" label="Turno" />
         <ChipField source="status" label="Estado" />
       </Box>
 
@@ -74,6 +78,7 @@ export const editarUsuario = () => (
         ]}
         fullWidth
       />
+      <CondicionalTurno />
       <TextInput source="telefono" label="Teléfono" fullWidth />
       <SelectInput
         source="status"
@@ -88,6 +93,31 @@ export const editarUsuario = () => (
       <PasswordInput source="password" label="Nueva contraseña (opcional)" fullWidth />
     </SimpleForm>
   </Edit>
+);
+
+// Componente condicional para el campo turno
+const CondicionalTurno = () => (
+  <FormDataConsumer>
+    {({ formData, ...rest }) =>
+      formData.role === "jefe_turno" || formData.role === "usuario" ? (
+        <SelectInput
+          source="turno"
+          label="Seleccionar Turno"
+          choices={[
+            { id: "1", name: "Turno 1" },
+            { id: "2", name: "Turno 2" },
+            { id: "3", name: "Turno 3" },
+            { id: "4", name: "Turno 4" },
+            { id: "5", name: "Turno 5" },
+            { id: "6", name: "Turno 6" },
+          ]}
+          fullWidth
+          required
+          {...rest}
+        />
+      ) : null
+    }
+  </FormDataConsumer>
 );
 
 export const crearUsuario = () => (
@@ -109,6 +139,7 @@ export const crearUsuario = () => (
         fullWidth
         required
       />
+      <CondicionalTurno />
       <TextInput source="telefono" label="Teléfono" fullWidth />
       <SelectInput
         source="status"
@@ -123,4 +154,28 @@ export const crearUsuario = () => (
       />
     </SimpleForm>
   </Create>
+);
+
+export const borrarUsuario = () => (
+  <Show>
+    <SimpleShowLayout>
+      <Typography variant="h5" gutterBottom color="error">
+        ¿Estás seguro de que deseas eliminar este usuario?
+      </Typography>
+      <Typography variant="body1" gutterBottom>
+        Esta acción no se puede deshacer.
+      </Typography>
+      <Box sx={{ mt: 2 }}>
+        <Typography variant="h6" gutterBottom>
+          Información del Usuario a Eliminar
+        </Typography>
+        <TextField source="username" label="Nombre de usuario" />
+        <TextField source="fullName" label="Nombre completo" />
+        <EmailField source="email" label="Correo electrónico" />
+        <ChipField source="role" label="Rol" />
+        <TextField source="turno" label="Turno" />
+        <ChipField source="status" label="Estado" />
+      </Box>
+    </SimpleShowLayout>
+  </Show>
 );

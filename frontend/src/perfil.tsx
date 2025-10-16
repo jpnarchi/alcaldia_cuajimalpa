@@ -134,61 +134,11 @@ export const mostrarHorario = () => {
           <Card sx={{ mb: 2 }}>
             <CardContent>
               <Typography variant="h6" gutterBottom color="primary">
-                Información Laboral
+                Turno Laboral
               </Typography>
               <Grid container spacing={2}>
                 <Grid item xs={12} md={6}>
                   <TextField source="turno" label="Turno asignado" />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                  <TextField source="especialidad" label="Especialidad" />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                  <TextField source="numeroEmpleado" label="Número de empleado" />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                  <TextField source="fechaIngreso" label="Fecha de ingreso" />
-                </Grid>
-              </Grid>
-            </CardContent>
-          </Card>
-        )}
-
-        {/* Horario de Trabajo - Usuario y Jefe de Turno */}
-        {(permissions === "usuario" || permissions === "jefe_turno") && (
-          <Card sx={{ mb: 2 }}>
-            <CardContent>
-              <Typography variant="h6" gutterBottom color="primary">
-                Horario de Trabajo
-              </Typography>
-              <Grid container spacing={2}>
-                <Grid item xs={12} md={4}>
-                  <TextField source="horario.horaInicio" label="Hora de entrada" />
-                </Grid>
-                <Grid item xs={12} md={4}>
-                  <TextField source="horario.horaFin" label="Hora de salida" />
-                </Grid>
-                <Grid item xs={12} md={4}>
-                  <TextField source="horario.diasTrabajo" label="Días de trabajo" />
-                </Grid>
-              </Grid>
-            </CardContent>
-          </Card>
-        )}
-
-        {/* Información de Jefe - Solo Jefe de Turno */}
-        {permissions === "jefe_turno" && (
-          <Card sx={{ mb: 2 }}>
-            <CardContent>
-              <Typography variant="h6" gutterBottom color="primary">
-                Información de Supervisión
-              </Typography>
-              <Grid container spacing={2}>
-                <Grid item xs={12} md={6}>
-                  <TextField source="equipoACargo" label="Equipo a cargo" />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                  <TextField source="zona" label="Zona de responsabilidad" />
                 </Grid>
               </Grid>
             </CardContent>
@@ -214,25 +164,6 @@ export const mostrarHorario = () => {
           </Card>
         )}
 
-        {/* Estadísticas - Todos los roles */}
-        <Card>
-          <CardContent>
-            <Typography variant="h6" gutterBottom color="primary">
-              Estadísticas
-            </Typography>
-            <Grid container spacing={2}>
-              <Grid item xs={12} md={4}>
-                <TextField source="estadisticas.foliosCreados" label="Folios creados" />
-              </Grid>
-              <Grid item xs={12} md={4}>
-                <TextField source="estadisticas.foliosCompletados" label="Folios completados" />
-              </Grid>
-              <Grid item xs={12} md={4}>
-                <TextField source="estadisticas.ultimaActividad" label="Última actividad" />
-              </Grid>
-            </Grid>
-          </CardContent>
-        </Card>
       </SimpleShowLayout>
     </Show>
   );

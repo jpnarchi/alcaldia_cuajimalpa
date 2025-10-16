@@ -11,9 +11,10 @@ import {
   Datagrid,
   useRecordContext,
   FunctionField,
+  Button,
 } from "react-admin";
-import React from "react";
-import { Typography, Chip } from "@mui/material";
+import { useState } from "react";
+import { Typography, Chip, Box, Dialog, DialogTitle, DialogContent, DialogActions, TextField as MuiTextField } from "@mui/material";
 
 export const listarFolio = () => (
   <List>
@@ -43,47 +44,120 @@ export const listarFolio = () => (
   </List>
 );
 
+const SolicitarModificacionDialog = ({ open, onClose, folioId }: any) => {
+  const [razon, setRazon] = useState("");
+
+  const handleSubmit = async () => {
+    if (!razon) {
+      alert("Escribe una razón");
+      return;
+    }
+
+    const response = await fetch('/api/solicitudesModificacion', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        folioId: folioId,
+        razon: razon,
+        estado: "Pendiente",
+        fechaSolicitud: new Date().toISOString()
+      })
+    });
+
+    if (response.ok) {
+      alert('Enviado');
+      setRazon("");
+      onClose();
+    } else {
+      alert('Error');
+    }
+  };
+
+  return (
+    <Dialog open={open} onClose={onClose}>
+      <DialogTitle>Pedir cambio</DialogTitle>
+      <DialogContent>
+        <MuiTextField
+          label="Razón de la modificación"
+          fullWidth
+          multiline
+          rows={4}
+          value={razon}
+          onChange={(e) => setRazon(e.target.value)}
+          sx={{ mt: 2 }}
+        />
+      </DialogContent>
+      <DialogActions>
+        <Button label="Cancelar" onClick={onClose} />
+        <Button label="Enviar" onClick={handleSubmit} />
+      </DialogActions>
+    </Dialog>
+  );
+};
 // Componente Show para ver el detalle completo del folio
-export const mostrarFolio = () => (
-  <Show>
-    <SimpleShowLayout>
-      <Typography variant="h5" gutterBottom>
-        Reporte de Emergencia Urbana - Folio #{<TextField source="id" />}
-      </Typography>
+export const mostrarFolio = () => {
+  const [showDialog, setShowDialog] = useState(false);
+  const record = useRecordContext();
 
-      <Typography variant="h6" sx={{ mt: 3, mb: 1 }}>
-        Información General
-      </Typography>
-      <TextField source="diaFechaHora" label="Día, fecha y hora" />
-      <TextField source="turno" label="Turno" />
-      <TextField source="nombrePersonal" label="Nombre del personal a cargo" />
-      <TextField source="modoActivacion" label="Modo de activación" />
-      <TextField source="tipoServicio" label="Tipo de servicio" />
+  return (
+    <>
+      <Show>
+        <SimpleShowLayout>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+            <Typography variant="h5" gutterBottom>
+              Reporte de Emergencia Urbana - Folio #{record?.id}
+            </Typography>
+            <Button 
+              label="Solicitar Modificación" 
+              onClick={() => setShowDialog(true)}
+              variant="outlined"
+              color="primary"
+            />
+          </Box>
 
-      <Typography variant="h6" sx={{ mt: 3, mb: 1 }}>
-        Detalles de Atención
-      </Typography>
-      <TextField source="fechaHoraAtencion" label="Fecha y hora de atención" />
-      <TextField source="tiempoTraslado" label="Tiempo de traslado" />
-      <TextField source="ubicacion" label="Ubicación" />
-      <TextField source="gravedadEmergencia" label="Gravedad de la emergencia" />
-      <TextField source="kmRecorridos" label="Kilómetros recorridos" />
+          <Typography variant="h6" sx={{ mt: 3, mb: 1 }}>
+            Información General
+          </Typography>
+          <TextField source="diaFechaHora" label="Día, fecha y hora" />
+          <TextField source="turno" label="Turno" />
+          <TextField source="nombrePersonal" label="Nombre del personal a cargo" />
+          <TextField source="modoActivacion" label="Modo de activación" />
+          <TextField source="tipoServicio" label="Tipo de servicio" />
 
-      <Typography variant="h6" sx={{ mt: 3, mb: 1 }}>
-        Trabajos y Observaciones
-      </Typography>
-      <TextField source="trabajosRealizados" label="Trabajos realizados" />
-      <TextField source="observaciones" label="Observaciones" />
-      <TextField source="conclusion" label="Conclusión/Dictamen" />
+          <Typography variant="h6" sx={{ mt: 3, mb: 1 }}>
+            Detalles de Atención
+          </Typography>
+          <TextField source="fechaHoraAtencion" label="Fecha y hora de atención" />
+          <TextField source="tiempoTraslado" label="Tiempo de traslado" />
+          <TextField source="ubicacion" label="Ubicación" />
+          <TextField source="gravedadEmergencia" label="Gravedad de la emergencia" />
+          <TextField source="kmRecorridos" label="Kilómetros recorridos" />
 
-      <Typography variant="h6" sx={{ mt: 3, mb: 1 }}>
-        Responsables y Autoridades
-      </Typography>
-      <TextField source="responsablesEmergencia" label="Responsables de la emergencia" />
-      <TextField source="autoridades" label="Autoridades participantes" />
-    </SimpleShowLayout>
-  </Show>
-);
+          <Typography variant="h6" sx={{ mt: 3, mb: 1 }}>
+            Trabajos y Observaciones
+          </Typography>
+          <TextField source="trabajosRealizados" label="Trabajos realizados" />
+          <TextField source="observaciones" label="Observaciones" />
+          <TextField source="conclusion" label="Conclusión/Dictamen" />
+
+          <Typography variant="h6" sx={{ mt: 3, mb: 1 }}>
+            Responsables y Autoridades
+          </Typography>
+          <TextField source="responsablesEmergencia" label="Responsables de la emergencia" />
+          <TextField source="autoridades" label="Autoridades participantes" />
+        </SimpleShowLayout>
+      </Show>
+
+      <SolicitarModificacionDialog 
+        open={showDialog} 
+        onClose={() => setShowDialog(false)}
+        folioId={record?.id}
+      />
+    </>
+  );
+};
 
 export const editarFolio = () => (
   <Edit>

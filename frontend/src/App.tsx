@@ -1,4 +1,4 @@
-import {Admin, Resource, CustomRoutes, usePermissions} from "react-admin";
+import {Admin, Resource, CustomRoutes} from "react-admin";
 import { Layout } from "./Layout";
 import { dataProvider } from "./dataProvider"; // Backend real conectado a MongoDB
 import authProvider from "./AuthProvider"; // AuthProvider conectado a MongoDB
@@ -10,9 +10,9 @@ import {Route} from "react-router-dom";
 import { listarPerfil, crearPerfil, editarPerfil, mostrarHorario} from "./perfil";
 import Registrarse from "./register";
 import { listarFolio, crearFolio, editarFolio, mostrarFolio } from "./ver-folios";
-import { listarEquipo, crearEquipo, editarEquipo, mostrarEquipo } from "./equipo";
-import { listarReporteEquipo, crearReporteEquipo, editarReporteEquipo, mostrarReporteEquipo } from "./reportes-mi-equipo";
-import { listarUsuarios, crearUsuario, editarUsuario, mostrarUsuario } from "./usuarios";
+import { listarEquipo, editarEquipo, mostrarEquipo } from "./equipo";
+import { listarReporteEquipo, mostrarReporteEquipo } from "./reportes-mi-equipo";
+import { listarUsuarios, crearUsuario, editarUsuario, mostrarUsuario, borrarUsuario} from "./usuarios";
 import { listarSolicitudes, editarSolicitud, mostrarSolicitud } from "./solicitud-modificaciones";
 
 // Iconos de lucide-react
@@ -52,26 +52,24 @@ export const App = () => {
               icon={User}
             />
 
-            {/* Recurso Folios - Todos los roles pueden ver/crear */}
+            {/* Recurso Folios - Solo Usuario puede crear */}
             {userRole === "usuario" && (
             <Resource
               name="folios"
               options={{ label: "Folios" }}
               list={listarFolio}
               create={crearFolio}
-              edit={userRole === "usuario" ? editarFolio : undefined}
+              //edit={userRole === "usuario" ? editarFolio : undefined}
               show={mostrarFolio}
               icon={FileText}
             />
             )}
-            {/* Recurso Folios creados - Solo admin y jefe_turno */}
+            {/* Recurso Folios creados - Solo admin (solo ver) */}
             {(userRole === "admin") && (
               <Resource
                 name="foliosCreados"
                 options={{ label: "Folios Creados" }}
                 list={listarReporte}
-                create={crearReporte}
-                edit={userRole === "admin" ? editarReporte : undefined}
                 show={mostrarReporte}
                 icon={FolderOpen}
               />
@@ -83,20 +81,17 @@ export const App = () => {
                 name="folios"
                 options={{ label: "Reportes de mi equipo" }}
                 list={listarReporteEquipo}
-                create={crearReporteEquipo}
-                edit={editarReporteEquipo}
                 show={mostrarReporteEquipo}
                 icon={ClipboardList}
               />
             )}
 
-            {/* Recurso Equipo - Solo jefe_turno */}
-            {userRole === "jefe_turno" && (
+            {/* Recurso Equipo - Solo jefe_turno y usuario */}
+            {(userRole === "jefe_turno" || userRole === "usuario") && (
               <Resource
                 name="equipoMiembros"
                 options={{ label: "Equipo" }}
                 list={listarEquipo}
-                create={crearEquipo}
                 edit={editarEquipo}
                 show={mostrarEquipo}
                 icon={Users}

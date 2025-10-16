@@ -686,6 +686,7 @@ app.post("/usuarios", async (req, res) => {
 			username: valores.username,
 			nombre: valores.fullName || "",
 			email: valores.email || "",
+			turno: valores.turno || "",
 			telefono: valores.telefono || "",
 			rol: valores.role || "usuario",
 			// Estadísticas iniciales
@@ -701,7 +702,7 @@ app.post("/usuarios", async (req, res) => {
 			nuevoPerfil.departamento = "";
 			nuevoPerfil.nivelAcceso = "";
 		} else if (valores.role === "jefe_turno") {
-			nuevoPerfil.turno = "";
+			nuevoPerfil.turno = valores.turno || "";
 			nuevoPerfil.especialidad = "";
 			nuevoPerfil.numeroEmpleado = "";
 			nuevoPerfil.fechaIngreso = "";
@@ -713,7 +714,7 @@ app.post("/usuarios", async (req, res) => {
 			nuevoPerfil.equipoACargo = "";
 			nuevoPerfil.zona = "";
 		} else {
-			nuevoPerfil.turno = "";
+			nuevoPerfil.turno = valores.turno || "";
 			nuevoPerfil.especialidad = "";
 			nuevoPerfil.numeroEmpleado = "";
 			nuevoPerfil.fechaIngreso = "";
