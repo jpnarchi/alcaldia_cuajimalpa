@@ -609,21 +609,69 @@ app.put("/solicitudesModificacion/:id", async (req, res) => {
 
 		let valores = req.body;
 		valores["id"] = Number(valores["id"]);
-		
+
 		// Si se está actualizando el estado y no hay fecha de respuesta, agregarla
-		if (valores.estado && valores.estado !== "Pendiente" && !valores.fechaRespuesta) {
+		if (valores.estadoSolicitud && valores.estadoSolicitud !== "Pendiente" && !valores.fechaRespuesta) {
 			valores.fechaRespuesta = new Date().toISOString();
 			if (!valores.respuestaAdmin) {
-				valores.respuestaAdmin = `Solicitud ${valores.estado.toLowerCase()} por ${user}`;
+				valores.respuestaAdmin = `Solicitud ${valores.estadoSolicitud.toLowerCase()} por ${user}`;
 			}
 		}
-		
+
 		await db.collection("solicitudesModificacion").updateOne({ "id": valores["id"] }, { "$set": valores });
 		let data = await db.collection("solicitudesModificacion").find({ "id": valores["id"] }).project({ _id: 0 }).toArray();
 		log(user, "solicitudesModificacion", "actualizar");
 		res.json(data[0]);
-	} catch {
+	} catch (error) {
+		console.error("Error al actualizar solicitud:", error);
 		res.sendStatus(401);
+	}
+});
+
+// POST /solicitudesModificacion/:id/aprobar - Aprobar solicitud y habilitar edición del folio
+app.post("/solicitudesModificacion/:id/aprobar", async (req, res) => {
+	try {
+		let token = req.get("Authentication");
+		let verifiedToken = await jwt.verify(token, JWT_SECRET);
+		let user = verifiedToken.usuario;
+
+		let solicitudId = Number(req.params.id);
+		let respuestaAdmin = req.body.respuestaAdmin || `Solicitud aprobada por ${user}`;
+
+		// Obtener la solicitud
+		let solicitud = await db.collection("solicitudesModificacion").findOne({ id: solicitudId });
+
+		if (!solicitud) {
+			return res.status(404).json({ error: "Solicitud no encontrada" });
+		}
+
+		// Actualizar el estado de la solicitud a "Aprobada"
+		let actualizacion = {
+			estadoSolicitud: "Aprobada",
+			respuestaAdmin: respuestaAdmin,
+			fechaRespuesta: new Date().toISOString(),
+			aprobadoPor: user
+		};
+
+		await db.collection("solicitudesModificacion").updateOne(
+			{ id: solicitudId },
+			{ $set: actualizacion }
+		);
+
+		await log(user, "solicitudesModificacion", "aprobar");
+
+		// Devolver la solicitud actualizada junto con el folioId para que el frontend pueda redirigir
+		let solicitudActualizada = await db.collection("solicitudesModificacion").findOne({ id: solicitudId });
+
+		res.json({
+			solicitud: solicitudActualizada,
+			message: "Solicitud aprobada. El folio ahora puede ser editado.",
+			folioId: solicitud.folioId
+		});
+
+	} catch (error) {
+		console.error("Error al aprobar solicitud:", error);
+		res.status(500).json({ error: "Error al aprobar la solicitud" });
 	}
 });
 

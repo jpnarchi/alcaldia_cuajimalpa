@@ -59,21 +59,35 @@ export const App = () => {
               options={{ label: "Folios" }}
               list={listarFolio}
               create={crearFolio}
-              //edit={userRole === "usuario" ? editarFolio : undefined}
+              edit={editarFolio}
               show={mostrarFolio}
               icon={FileText}
             />
             )}
-            {/* Recurso Folios creados - Solo admin (solo ver) */}
-            {(userRole === "admin") && (
+
+            {/* Recurso Solicitudes de Modificación - Usuario puede ver sus solicitudes */}
+            {userRole === "usuario" && (
               <Resource
-                name="foliosCreados"
-                options={{ label: "Folios Creados" }}
-                list={listarReporte}
-                show={mostrarReporte}
-                icon={FolderOpen}
+                name="solicitudesModificacion"
+                options={{ label: "Mis Solicitudes" }}
+                list={listarSolicitudes}
+                show={mostrarSolicitud}
+                icon={FilePenLine}
               />
             )}
+            {/* Recurso Folios - Admin puede editar (para solicitudes aprobadas) */}
+            {userRole === "admin" && (
+              <Resource
+                name="folios"
+                options={{ label: "Folios" }}
+                list={listarFolio}
+                edit={editarFolio}
+                show={mostrarFolio}
+              />
+            )}
+
+            {/* Recurso Folios creados - Solo admin (solo ver) */}
+
 
             {/* Recurso Reportes de mi equipo - Solo jefe_turno */}
             {userRole === "jefe_turno" && (
