@@ -8,11 +8,9 @@ import {
   SimpleForm,
   TextInput,
   SelectInput,
-  ChipField,
   DateField,
   FunctionField,
 } from "react-admin";
-import React from "react";
 import { Typography, Box, Chip } from "@mui/material";
 
 export const listarSolicitudes = () => (
@@ -25,11 +23,11 @@ export const listarSolicitudes = () => (
         label="Estado"
         render={(record: any) => (
           <Chip
-            label={record.estadoSolicitud}
+            label={record.estado}
             color={
-              record.estadoSolicitud === "Pendiente"
+              record.estado === "Pendiente"
                 ? "warning"
-                : record.estadoSolicitud === "Aprobada"
+                : record.estado === "Aprobada"
                 ? "success"
                 : "error"
             }
@@ -37,7 +35,7 @@ export const listarSolicitudes = () => (
           />
         )}
       />
-      <TextField source="motivoSolicitud" label="Motivo" />
+      <TextField source="razon" label="Razón" />
     </Datagrid>
   </List>
 );
@@ -55,28 +53,30 @@ export const mostrarSolicitud = () => (
         </Typography>
         <TextField source="folioId" label="Folio #" />
         <TextField source="solicitadoPor" label="Solicitado por" />
-        <TextField source="rolSolicitante" label="Rol del solicitante" />
         <DateField source="fechaSolicitud" label="Fecha de solicitud" showTime />
-        <ChipField source="estadoSolicitud" label="Estado de la solicitud" />
+        <FunctionField
+          label="Estado"
+          render={(record: any) => (
+            <Chip
+              label={record.estado}
+              color={
+                record.estado === "Pendiente"
+                  ? "warning"
+                  : record.estado === "Aprobada"
+                  ? "success"
+                  : "error"
+              }
+              size="small"
+            />
+          )}
+        />
       </Box>
 
       <Box sx={{ mt: 3 }}>
         <Typography variant="h6" gutterBottom>
           Detalles de la Modificación
         </Typography>
-        <TextField source="motivoSolicitud" label="Motivo de la solicitud" />
-        <TextField source="camposModificar" label="Campos a modificar" />
-        <TextField source="justificacion" label="Justificación" />
-      </Box>
-
-      <Box sx={{ mt: 3 }}>
-        <Typography variant="h6" gutterBottom>
-          Información del Folio Original
-        </Typography>
-        <TextField source="folioOriginal.diaFechaHora" label="Fecha y hora original" />
-        <TextField source="folioOriginal.nombrePersonal" label="Personal asignado" />
-        <TextField source="folioOriginal.tipoServicio" label="Tipo de servicio" />
-        <TextField source="folioOriginal.ubicacion" label="Ubicación" />
+        <TextField source="razon" label="Razón de la solicitud" />
       </Box>
 
       <Box sx={{ mt: 3 }}>
@@ -96,11 +96,10 @@ export const editarSolicitud = () => (
       <TextField source="folioId" label="Folio #" />
       <TextField source="solicitadoPor" label="Solicitado por" />
       <TextField source="fechaSolicitud" label="Fecha de solicitud" />
-      <TextInput source="motivoSolicitud" label="Motivo de la solicitud" fullWidth multiline disabled />
-      <TextInput source="justificacion" label="Justificación" fullWidth multiline rows={3} disabled />
+      <TextInput source="razon" label="Razón de la solicitud" fullWidth multiline disabled />
 
       <SelectInput
-        source="estadoSolicitud"
+        source="estado"
         label="Estado de la solicitud"
         choices={[
           { id: "Pendiente", name: "Pendiente" },

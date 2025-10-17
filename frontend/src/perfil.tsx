@@ -12,7 +12,7 @@ import {
   PasswordInput,
 } from "react-admin";
 import React from "react";
-import { Typography, Box, Card, CardContent, Grid, Avatar } from "@mui/material";
+import { Typography, Box, Card, CardContent, Avatar, Grid } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import { useNavigate } from "react-router-dom";
 
@@ -113,16 +113,16 @@ export const mostrarHorario = () => {
               Información Personal
             </Typography>
             <Grid container spacing={2}>
-              <Grid item xs={12} md={6}>
+              <Grid size={{ xs: 12, md: 6 }}>
                 <TextField source="nombre" label="Nombre completo" />
               </Grid>
-              <Grid item xs={12} md={6}>
+              <Grid size={{ xs: 12, md: 6 }}>
                 <TextField source="username" label="Usuario" />
               </Grid>
-              <Grid item xs={12} md={6}>
+              <Grid size={{ xs: 12, md: 6 }}>
                 <EmailField source="email" label="Correo electrónico" />
               </Grid>
-              <Grid item xs={12} md={6}>
+              <Grid size={{ xs: 12, md: 6 }}>
                 <TextField source="telefono" label="Teléfono" />
               </Grid>
             </Grid>
@@ -137,7 +137,7 @@ export const mostrarHorario = () => {
                 Turno Laboral
               </Typography>
               <Grid container spacing={2}>
-                <Grid item xs={12} md={6}>
+                <Grid size={{ xs: 12, md: 6 }}>
                   <TextField source="turno" label="Turno asignado" />
                 </Grid>
               </Grid>
@@ -153,10 +153,10 @@ export const mostrarHorario = () => {
                 Información Administrativa
               </Typography>
               <Grid container spacing={2}>
-                <Grid item xs={12} md={6}>
+                <Grid size={{ xs: 12, md: 6 }}>
                   <TextField source="departamento" label="Departamento" />
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid size={{ xs: 12, md: 6 }}>
                   <TextField source="nivelAcceso" label="Nivel de acceso" />
                 </Grid>
               </Grid>

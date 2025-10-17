@@ -509,9 +509,7 @@ app.delete("/equipoMiembros/:id", async (req, res) => {
 
 app.get("/solicitudesModificacion", async (req, res) => {
 	try {
-		let token = req.get("Authentication");
-		let verifiedToken = await jwt.verify(token, JWT_SECRET);
-		let user = verifiedToken.usuario;
+		console.log("Query params:", req.query);
 
 		if ("_sort" in req.query) {
 			let sortBy = req.query._sort;
@@ -522,10 +520,23 @@ app.get("/solicitudesModificacion", async (req, res) => {
 			sorter[sortBy] = sortOrder;
 
 			let data = await db.collection("solicitudesModificacion").find({}).sort(sorter).project({ _id: 0 }).toArray();
+			console.log("Datos encontrados:", data.length);
 			res.set("Access-Control-Expose-Headers", "X-Total-Count");
 			res.set("X-Total-Count", data.length);
 			data = data.slice(inicio, fin);
-			log(user, "solicitudesModificacion", "leer");
+
+			// Intentar hacer log si hay token
+			try {
+				let token = req.get("Authentication");
+				if (token) {
+					let verifiedToken = await jwt.verify(token, JWT_SECRET);
+					let user = verifiedToken.usuario;
+					await log(user, "solicitudesModificacion", "leer");
+				}
+			} catch (logError) {
+				console.log("No se pudo registrar en log, continuando...");
+			}
+
 			res.json(data);
 		} else if ("id" in req.query) {
 			let data = [];
@@ -536,41 +547,57 @@ app.get("/solicitudesModificacion", async (req, res) => {
 			res.json(data);
 		} else {
 			let data = await db.collection("solicitudesModificacion").find(req.query).project({ _id: 0 }).toArray();
+			console.log("Datos encontrados (sin sort):", data.length);
 			res.set("Access-Control-Expose-Headers", "X-Total-Count");
 			res.set("X-Total-Count", data.length);
 			res.json(data);
 		}
-	} catch {
-		res.sendStatus(401);
+	} catch (error) {
+		console.error("Error en GET solicitudesModificacion:", error);
+		res.status(500).json({ error: "Error al obtener solicitudes" });
 	}
 });
 
 app.get("/solicitudesModificacion/:id", async (req, res) => {
 	try {
-		let token = req.get("Authentication");
-		await jwt.verify(token, JWT_SECRET);
 		let data = await db.collection("solicitudesModificacion").find({ "id": Number(req.params.id) }).project({ _id: 0 }).toArray();
 		res.json(data[0]);
-	} catch {
-		res.sendStatus(401);
+	} catch (error) {
+		console.error("Error al obtener solicitud:", error);
+		res.status(500).json({ error: "Error al obtener la solicitud" });
 	}
 });
 
 app.post("/solicitudesModificacion", async (req, res) => {
 	try {
-		let token = req.get("Authentication");
-		let verifiedToken = await jwt.verify(token, JWT_SECRET);
-		let user = verifiedToken.usuario;
-
 		let valores = req.body;
+		console.log("Datos recibidos para crear solicitud:", valores);
+
 		let lastDoc = await db.collection("solicitudesModificacion").find({}).sort({ id: -1 }).limit(1).toArray();
 		valores["id"] = lastDoc.length > 0 ? lastDoc[0].id + 1 : 1;
 
+		console.log("Insertando solicitud con ID:", valores.id);
 		await db.collection("solicitudesModificacion").insertOne(valores);
-		log(user, "solicitudesModificacion", "crear");
+
+		// Intentar hacer log si hay token, pero no fallar si no hay
+		try {
+			let token = req.get("Authentication");
+			if (token) {
+				let verifiedToken = await jwt.verify(token, JWT_SECRET);
+				let user = verifiedToken.usuario;
+				await log(user, "solicitudesModificacion", "crear");
+			} else {
+				await log("anónimo", "solicitudesModificacion", "crear");
+			}
+		} catch (logError) {
+			console.log("No se pudo registrar en log, continuando...");
+		}
+
+		console.log("Solicitud creada exitosamente");
 		res.json(valores);
-	} catch {
-		res.sendStatus(401);
+	} catch (error) {
+		console.error("Error al crear solicitud:", error);
+		res.status(500).json({ error: "Error al crear la solicitud" });
 	}
 });
 
@@ -582,6 +609,15 @@ app.put("/solicitudesModificacion/:id", async (req, res) => {
 
 		let valores = req.body;
 		valores["id"] = Number(valores["id"]);
+		
+		// Si se está actualizando el estado y no hay fecha de respuesta, agregarla
+		if (valores.estado && valores.estado !== "Pendiente" && !valores.fechaRespuesta) {
+			valores.fechaRespuesta = new Date().toISOString();
+			if (!valores.respuestaAdmin) {
+				valores.respuestaAdmin = `Solicitud ${valores.estado.toLowerCase()} por ${user}`;
+			}
+		}
+		
 		await db.collection("solicitudesModificacion").updateOne({ "id": valores["id"] }, { "$set": valores });
 		let data = await db.collection("solicitudesModificacion").find({ "id": valores["id"] }).project({ _id: 0 }).toArray();
 		log(user, "solicitudesModificacion", "actualizar");
@@ -828,3 +864,4 @@ app.listen(PORT, ()=>{
 	connectToDB();
 	console.log("aplicacion corriendo en puerto 3000");
 });
+

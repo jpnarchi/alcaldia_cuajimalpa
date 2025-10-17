@@ -9,10 +9,18 @@ const httpClient = (url: string, options: any = {}) => {
   }
 
   // Agregar token de autenticación si existe
-  const token = localStorage.getItem('token');
+  // Intentar obtener de localStorage primero, luego de sessionStorage
+  const token = localStorage.getItem('token') || sessionStorage.getItem('auth');
+  console.log('🔑 Token:', token ? 'ENCONTRADO ✅' : 'NO ENCONTRADO ❌');
+
   if (token) {
     options.headers.set('Authentication', token);
+    console.log('✅ Header Authentication establecido');
+  } else {
+    console.warn('⚠️ No hay token disponible');
   }
+
+  console.log('📡 Petición a:', url);
 
   return fetchUtils.fetchJson(url, options);
 };

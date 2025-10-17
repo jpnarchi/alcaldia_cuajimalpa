@@ -12,6 +12,8 @@ import {
   useRecordContext,
   FunctionField,
   Button,
+  useDataProvider,
+  useNotify,
 } from "react-admin";
 import { useState } from "react";
 import { Typography, Chip, Box, Dialog, DialogTitle, DialogContent, DialogActions, TextField as MuiTextField } from "@mui/material";
@@ -44,34 +46,55 @@ export const listarFolio = () => (
   </List>
 );
 
+// Botón que tiene acceso al record context
+const BotonSolicitarModificacion = ({ onOpen }: { onOpen: (id: number) => void }) => {
+  const record = useRecordContext();
+
+  return (
+    <Button
+      label="Solicitar Modificación"
+      onClick={() => onOpen(record?.id)}
+      variant="outlined"
+      color="primary"
+    />
+  );
+};
+
 const SolicitarModificacionDialog = ({ open, onClose, folioId }: any) => {
   const [razon, setRazon] = useState("");
+  const dataProvider = useDataProvider();
+  const notify = useNotify();
 
   const handleSubmit = async () => {
     if (!razon) {
-      alert("Escribe una razón");
+      notify('Por favor escribe una razón para la modificación', { type: 'warning', messageArgs: { _: 'Por favor escribe una razón para la modificación' } });
       return;
     }
 
-    const response = await fetch('/api/solicitudesModificacion', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        folioId: folioId,
-        razon: razon,
-        estado: "Pendiente",
-        fechaSolicitud: new Date().toISOString()
-      })
-    });
+    if (!folioId) {
+      notify('Error: No se pudo identificar el folio', { type: 'error', messageArgs: { _: 'Error: No se pudo identificar el folio' } });
+      return;
+    }
 
-    if (response.ok) {
-      alert('Enviado');
+    try {
+      console.log('Enviando solicitud con folioId:', folioId);
+      await dataProvider.create('solicitudesModificacion', {
+        data: {
+          folioId: Number(folioId),
+          motivoSolicitud: razon,
+          estadoSolicitud: "Pendiente",
+          fechaSolicitud: new Date().toISOString(),
+          solicitadoPor: localStorage.getItem('username') || 'usuario',
+          rolSolicitante: localStorage.getItem('role') || 'usuario'
+        }
+      });
+
+      notify('Solicitud de modificación enviada exitosamente', { type: 'success', messageArgs: { _: 'Solicitud de modificación enviada exitosamente' } });
       setRazon("");
       onClose();
-    } else {
-      alert('Error');
+    } catch (error) {
+      console.error('Error al enviar solicitud:', error);
+      notify('Error al enviar la solicitud de modificación', { type: 'error', messageArgs: { _: 'Error al enviar la solicitud de modificación' } });
     }
   };
 
@@ -99,23 +122,28 @@ const SolicitarModificacionDialog = ({ open, onClose, folioId }: any) => {
 // Componente Show para ver el detalle completo del folio
 export const mostrarFolio = () => {
   const [showDialog, setShowDialog] = useState(false);
-  const record = useRecordContext();
+  const [folioId, setFolioId] = useState<number | null>(null);
+
+  const handleOpenDialog = (id: number) => {
+    console.log('Abriendo diálogo para folio ID:', id);
+    setFolioId(id);
+    setShowDialog(true);
+  };
 
   return (
     <>
       <Show>
         <SimpleShowLayout>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-            <Typography variant="h5" gutterBottom>
-              Reporte de Emergencia Urbana - Folio #{record?.id}
-            </Typography>
-            <Button 
-              label="Solicitar Modificación" 
-              onClick={() => setShowDialog(true)}
-              variant="outlined"
-              color="primary"
-            />
-          </Box>
+          <FunctionField
+            render={(record: any) => (
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2, width: '100%' }}>
+                <Typography variant="h5" gutterBottom>
+                  Reporte de Emergencia Urbana - Folio #{record?.id}
+                </Typography>
+                <BotonSolicitarModificacion onOpen={handleOpenDialog} />
+              </Box>
+            )}
+          />
 
           <Typography variant="h6" sx={{ mt: 3, mb: 1 }}>
             Información General
@@ -150,10 +178,10 @@ export const mostrarFolio = () => {
         </SimpleShowLayout>
       </Show>
 
-      <SolicitarModificacionDialog 
-        open={showDialog} 
+      <SolicitarModificacionDialog
+        open={showDialog}
         onClose={() => setShowDialog(false)}
-        folioId={record?.id}
+        folioId={folioId}
       />
     </>
   );

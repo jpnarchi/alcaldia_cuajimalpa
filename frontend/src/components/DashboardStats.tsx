@@ -1,13 +1,13 @@
 import React from 'react';
 import { useGetList } from '../hooks/useGetList';
 import {
-  Grid,
   Card,
   CardContent,
   Typography,
   Box,
   CircularProgress,
   Alert,
+  Grid,
 } from '@mui/material';
 import { People, Article, Photo, CheckCircle, Comment, Collections } from '@mui/icons-material';
 
@@ -97,7 +97,7 @@ export const DashboardStats: React.FC = () => {
       </Typography>
 
       <Grid container spacing={3}>
-        <Grid item xs={12} sm={6} md={4}>
+        <Grid size={{ xs: 12, sm: 6, md: 4 }}>
           <StatCard
             title="Usuarios Registrados"
             value={totalUsers}
@@ -107,7 +107,7 @@ export const DashboardStats: React.FC = () => {
           />
         </Grid>
 
-        <Grid item xs={12} sm={6} md={4}>
+        <Grid size={{ xs: 12, sm: 6, md: 4 }}>
           <StatCard
             title="Publicaciones"
             value={totalPosts}
@@ -117,7 +117,7 @@ export const DashboardStats: React.FC = () => {
           />
         </Grid>
 
-        <Grid item xs={12} sm={6} md={4}>
+        <Grid size={{ xs: 12, sm: 6, md: 4 }}>
           <StatCard
             title="Álbumes"
             value={totalAlbums}
@@ -127,7 +127,7 @@ export const DashboardStats: React.FC = () => {
           />
         </Grid>
 
-        <Grid item xs={12} sm={6} md={4}>
+        <Grid size={{ xs: 12, sm: 6, md: 4 }}>
           <StatCard
             title="Fotos Subidas"
             value={totalPhotos}
@@ -137,7 +137,7 @@ export const DashboardStats: React.FC = () => {
           />
         </Grid>
 
-        <Grid item xs={12} sm={6} md={4}>
+        <Grid size={{ xs: 12, sm: 6, md: 4 }}>
           <StatCard
             title="Comentarios"
             value={totalComments}
@@ -147,7 +147,7 @@ export const DashboardStats: React.FC = () => {
           />
         </Grid>
 
-        <Grid item xs={12} sm={6} md={4}>
+        <Grid size={{ xs: 12, sm: 6, md: 4 }}>
           <StatCard
             title="Tareas Pendientes"
             value={totalTodos}

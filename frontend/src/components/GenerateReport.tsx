@@ -10,11 +10,11 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  Grid,
   Paper,
   Chip,
   Alert,
   Snackbar,
+  Grid,
 } from '@mui/material';
 import { Description, Download, CalendarToday, Person } from '@mui/icons-material';
 
@@ -137,7 +137,7 @@ export const GenerateReport: React.FC = () => {
       </Typography>
 
       <Grid container spacing={3}>
-        <Grid item xs={12}>
+        <Grid size={{ xs: 12 }}>
           <Card elevation={3}>
             <CardContent sx={{ p: 4 }}>
               <Box sx={{ textAlign: 'center', mb: 4 }}>
@@ -151,7 +151,7 @@ export const GenerateReport: React.FC = () => {
 
               <Grid container spacing={4}>
                 {/* Información Básica */}
-                <Grid item xs={12}>
+                <Grid size={{ xs: 12 }}>
                   <Paper sx={{ p: 3, bgcolor: 'primary.50', border: '1px solid', borderColor: 'primary.200' }}>
                     <Typography variant="h5" gutterBottom sx={{ color: 'primary.main', fontWeight: 'bold' }}>
                       📋 Información Básica
@@ -161,7 +161,7 @@ export const GenerateReport: React.FC = () => {
                     </Typography>
 
                     <Grid container spacing={3}>
-                      <Grid item xs={12} sm={4}>
+                      <Grid size={{ xs: 12, sm: 4 }}>
                         <TextField
                           fullWidth
                           label="Día"
@@ -173,7 +173,7 @@ export const GenerateReport: React.FC = () => {
                         />
                       </Grid>
 
-                      <Grid item xs={12} sm={4}>
+                      <Grid size={{ xs: 12, sm: 4 }}>
                         <TextField
                           fullWidth
                           label="Fecha"
@@ -186,7 +186,7 @@ export const GenerateReport: React.FC = () => {
                         />
                       </Grid>
 
-                      <Grid item xs={12} sm={4}>
+                      <Grid size={{ xs: 12, sm: 4 }}>
                         <TextField
                           fullWidth
                           label="Hora"
@@ -199,7 +199,7 @@ export const GenerateReport: React.FC = () => {
                         />
                       </Grid>
 
-                      <Grid item xs={12} sm={6}>
+                      <Grid size={{ xs: 12, sm: 6 }}>
                         <FormControl fullWidth required variant="outlined">
                           <InputLabel>Turno</InputLabel>
                           <Select
@@ -216,7 +216,7 @@ export const GenerateReport: React.FC = () => {
                         </FormControl>
                       </Grid>
 
-                      <Grid item xs={12} sm={6}>
+                      <Grid size={{ xs: 12, sm: 6 }}>
                         <TextField
                           fullWidth
                           label="Nombre del personal a cargo"
@@ -227,7 +227,7 @@ export const GenerateReport: React.FC = () => {
                         />
                       </Grid>
 
-                      <Grid item xs={12} sm={6}>
+                      <Grid size={{ xs: 12, sm: 6 }}>
                         <FormControl fullWidth required variant="outlined">
                           <InputLabel>Modo de activación</InputLabel>
                           <Select
@@ -244,7 +244,7 @@ export const GenerateReport: React.FC = () => {
                         </FormControl>
                       </Grid>
 
-                      <Grid item xs={12} sm={6}>
+                      <Grid size={{ xs: 12, sm: 6 }}>
                         <FormControl fullWidth required variant="outlined">
                           <InputLabel>Tipo de servicio</InputLabel>
                           <Select
@@ -265,7 +265,7 @@ export const GenerateReport: React.FC = () => {
                 </Grid>
 
                 {/* Información de Atención */}
-                <Grid item xs={12}>
+                <Grid size={{ xs: 12 }}>
                   <Paper sx={{ p: 3, bgcolor: 'warning.50', border: '1px solid', borderColor: 'warning.200' }}>
                     <Typography variant="h5" gutterBottom sx={{ color: 'warning.main', fontWeight: 'bold' }}>
                       🚨 Información de Atención
@@ -275,7 +275,7 @@ export const GenerateReport: React.FC = () => {
                     </Typography>
 
                     <Grid container spacing={3}>
-                      <Grid item xs={12} sm={6}>
+                      <Grid size={{ xs: 12, sm: 6 }}>
                         <TextField
                           fullWidth
                           label="Fecha de atención"
@@ -288,7 +288,7 @@ export const GenerateReport: React.FC = () => {
                         />
                       </Grid>
 
-                      <Grid item xs={12} sm={6}>
+                      <Grid size={{ xs: 12, sm: 6 }}>
                         <TextField
                           fullWidth
                           label="Hora de atención"
@@ -301,7 +301,7 @@ export const GenerateReport: React.FC = () => {
                         />
                       </Grid>
 
-                      <Grid item xs={12} sm={6}>
+                      <Grid size={{ xs: 12, sm: 6 }}>
                         <TextField
                           fullWidth
                           label="Tiempo de traslado (minutos)"
@@ -313,7 +313,7 @@ export const GenerateReport: React.FC = () => {
                         />
                       </Grid>
 
-                      <Grid item xs={12} sm={6}>
+                      <Grid size={{ xs: 12, sm: 6 }}>
                         <TextField
                           fullWidth
                           label="Km recorridos"
@@ -325,7 +325,7 @@ export const GenerateReport: React.FC = () => {
                         />
                       </Grid>
 
-                      <Grid item xs={12}>
+                      <Grid size={{ xs: 12 }}>
                         <TextField
                           fullWidth
                           label="Ubicación"
@@ -337,7 +337,7 @@ export const GenerateReport: React.FC = () => {
                         />
                       </Grid>
 
-                      <Grid item xs={12} sm={6}>
+                      <Grid size={{ xs: 12, sm: 6 }}>
                         <TextField
                           fullWidth
                           label="Coordenadas GPS"
@@ -348,7 +348,7 @@ export const GenerateReport: React.FC = () => {
                         />
                       </Grid>
 
-                      <Grid item xs={12} sm={6}>
+                      <Grid size={{ xs: 12, sm: 6 }}>
                         <FormControl fullWidth required variant="outlined">
                           <InputLabel>Gravedad de la emergencia</InputLabel>
                           <Select
@@ -369,7 +369,7 @@ export const GenerateReport: React.FC = () => {
                 </Grid>
 
                 {/* Trabajos y Observaciones */}
-                <Grid item xs={12}>
+                <Grid size={{ xs: 12 }}>
                   <Paper sx={{ p: 3, bgcolor: 'success.50', border: '1px solid', borderColor: 'success.200' }}>
                     <Typography variant="h5" gutterBottom sx={{ color: 'success.main', fontWeight: 'bold' }}>
                       🔧 Trabajos y Observaciones
@@ -379,7 +379,7 @@ export const GenerateReport: React.FC = () => {
                     </Typography>
 
                     <Grid container spacing={3}>
-                      <Grid item xs={12}>
+                      <Grid size={{ xs: 12 }}>
                         <TextField
                           fullWidth
                           multiline
@@ -393,7 +393,7 @@ export const GenerateReport: React.FC = () => {
                         />
                       </Grid>
 
-                      <Grid item xs={12}>
+                      <Grid size={{ xs: 12 }}>
                         <TextField
                           fullWidth
                           multiline
@@ -407,7 +407,7 @@ export const GenerateReport: React.FC = () => {
                         />
                       </Grid>
 
-                      <Grid item xs={12}>
+                      <Grid size={{ xs: 12 }}>
                         <Box sx={{ 
                           border: '2px dashed', 
                           borderColor: 'grey.300', 
@@ -451,7 +451,7 @@ export const GenerateReport: React.FC = () => {
                         </Box>
                       </Grid>
 
-                      <Grid item xs={12}>
+                      <Grid size={{ xs: 12 }}>
                         <TextField
                           fullWidth
                           multiline
@@ -469,7 +469,7 @@ export const GenerateReport: React.FC = () => {
                 </Grid>
 
                 {/* Responsables */}
-                <Grid item xs={12}>
+                <Grid size={{ xs: 12 }}>
                   <Paper sx={{ p: 3, bgcolor: 'info.50', border: '1px solid', borderColor: 'info.200' }}>
                     <Typography variant="h5" gutterBottom sx={{ color: 'info.main', fontWeight: 'bold' }}>
                       👥 Responsables y Participantes
@@ -479,7 +479,7 @@ export const GenerateReport: React.FC = () => {
                     </Typography>
 
                     <Grid container spacing={3}>
-                      <Grid item xs={12} sm={6}>
+                      <Grid size={{ xs: 12, sm: 6 }}>
                         <TextField
                           fullWidth
                           label="Responsable del inmueble/zona"
@@ -490,7 +490,7 @@ export const GenerateReport: React.FC = () => {
                         />
                       </Grid>
 
-                      <Grid item xs={12} sm={6}>
+                      <Grid size={{ xs: 12, sm: 6 }}>
                         <TextField
                           fullWidth
                           label="Área responsable"
@@ -501,7 +501,7 @@ export const GenerateReport: React.FC = () => {
                         />
                       </Grid>
 
-                      <Grid item xs={12}>
+                      <Grid size={{ xs: 12 }}>
                         <TextField
                           fullWidth
                           multiline
@@ -518,7 +518,7 @@ export const GenerateReport: React.FC = () => {
                 </Grid>
 
                 {/* Configuración del Reporte */}
-                <Grid item xs={12}>
+                <Grid size={{ xs: 12 }}>
                   <Paper sx={{ p: 3, bgcolor: 'grey.50', border: '1px solid', borderColor: 'grey.300' }}>
                     <Typography variant="h5" gutterBottom sx={{ color: 'text.primary', fontWeight: 'bold' }}>
                       ⚙️ Configuración del Reporte
@@ -528,7 +528,7 @@ export const GenerateReport: React.FC = () => {
                     </Typography>
 
                     <Grid container spacing={3}>
-                      <Grid item xs={12} sm={6}>
+                      <Grid size={{ xs: 12, sm: 6 }}>
                         <FormControl fullWidth variant="outlined">
                           <InputLabel>Formato del reporte</InputLabel>
                           <Select
